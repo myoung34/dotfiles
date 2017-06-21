@@ -36,7 +36,7 @@ function warning() {
 ##
 # Configuration
 ##
-CONFIG_FILES=( cygaliases bash_aliases bash_profile gitaliases gitconfig gitignore_default vimrc tmux.conf exports )
+CONFIG_FILES=( cygaliases bash_aliases bash_profile gitaliases gitconfig gitignore_default vimrc exports )
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 INCLUDES=()
 OPERATION=0
@@ -46,9 +46,8 @@ SOURCE_DIR="$HOME/Source"
 # Program checks
 ##
 BREW_EXISTS=$(type -p brew 2>/dev/null)
-GIT_EXISTS=$(type -p git 2>/dev/null)
 RUBY_EXISTS=$(type -p ruby 2>/dev/null)
-PYTHON_EXISTS=$(type -p python 2>/dev/null)
+PYENV_EXISTS=$([[ -d ~/.pyenv ]])
 GO_EXISTS=$(type -p go 2>/dev/null)
 NVM_EXISTS=$(test -d ~/.nvm)
 POWERLINE_EXISTS=$(type -p powerline 2>/dev/null)
@@ -58,9 +57,7 @@ TMUX_EXISTS=$(type -p tmux 2>/dev/null)
 # Local program checks
 ##
 LOCAL_BREW_EXISTS=$(type -p /usr/local/bin/brew 2>/dev/null)
-LOCAL_GIT_EXISTS=$(type -p /usr/local/bin/git 2>/dev/null)
 LOCAL_RUBY_EXISTS=$(type -p /usr/local/bin/ruby 2>/dev/null)
-LOCAL_PYTHON_EXISTS=$(type -p /usr/local/bin/python 2>/dev/null)
 LOCAL_GO_EXISTS=$(type -p /usr/local/bin/go 2>/dev/null)
 LOCAL_NVM_EXISTS=$NVM_EXISTS
 LOCAL_POWERLINE_EXISTS=$POWERLINE_EXISTS
@@ -72,7 +69,7 @@ LOCAL_TMUX_EXISTS=$TMUX_EXISTS
 INSTALL=1
 UNINSTALL=2
 INSTALL_BREW_ONLY=3
-INSTALL_GIT_ONLY=4
+INSTALL_ENHANCD_ONLY=4
 INSTALL_NEOBUNDLE_ONLY=5
 INSTALL_RUBY_ONLY=6
 INSTALL_PYTHON_ONLY=7
@@ -90,7 +87,6 @@ for arg in "$@"; do
     # Install arguments
     -i|--install)             OPERATION=$INSTALL ;;
     --install-brew-only)      OPERATION=$INSTALL_BREW_ONLY ;;
-    --install-git-only)       OPERATION=$INSTALL_GIT_ONLY ;;
     --install-neobundle-only) OPERATION=$INSTALL_NEOBUNDLE_ONLY ;;
     --install-ruby-only)      OPERATION=$INSTALL_RUBY_ONLY ;;
     --install-python-only)    OPERATION=$INSTALL_PYTHON_ONLY ;;
@@ -98,13 +94,14 @@ for arg in "$@"; do
     --install-nvm-only)       OPERATION=$INSTALL_NVM_ONLY ;;
     --install-powerline-only) OPERATION=$INSTALL_POWERLINE_ONLY ;;
     --install-tmux-only)      OPERATION=$INSTALL_TMUX_ONLY ;;
+    --install-enhancd-only)   OPERATION=$INSTALL_ENHANCD_ONLY ;;
 
     # Uninstall arguments
     -u|--uninstall)             OPERATION=$UNINSTALL ;;
     --uninstall-neobundle-only) OPERATION=$UNINSTALL_NEOBUNDLE_ONLY ;;
     
     # Includes arguments
-    -a|--all)             INCLUDES=('brew' 'git' 'neobundle' 'ruby' 'python' 'go' 'nvm' 'powerline' 'tmux') ;;
+    -a|--all)             INCLUDES=('brew' 'git' 'neobundle' 'ruby' 'python' 'go' 'nvm' 'powerline' 'tmux' 'enhancd') ;;
     -b|--brew)            INCLUDES=("${INCLUDES[@]}" 'brew') ;;
     -g|--git)             INCLUDES=("${INCLUDES[@]}" 'git') ;;
     -n|--neobundle)       INCLUDES=("${INCLUDES[@]}" 'neobundle') ;;
@@ -114,6 +111,7 @@ for arg in "$@"; do
     -nvm|--nvm)           INCLUDES=("${INCLUDES[@]}" 'nvm') ;;
     -power|--powerline)   INCLUDES=("${INCLUDES[@]}" 'powerline') ;;
     -t|--tmux)            INCLUDES=("${INCLUDES[@]}" 'tmux') ;;
+    -e|--enhancd)         INCLUDES=("${INCLUDES[@]}" 'enhancd') ;;
     
     *)
       echo "Invalid param: $arg"
@@ -171,47 +169,8 @@ function install_configuration() {
   
 }
 
-function install_git() {
-  if [[ $LOCAL_GIT_EXISTS ]]; then
-    notice "Git already installed."
-  else
-    if [[ $(uname) = "Darwin" ]]; then
-      if [[ !$BREW_EXISTS ]]; then
-        install_brew
-      fi
-    
-      brew update
-      brew install git
-    elif [[ $(uname) = "Linux" ]]; then
-      PREFIX=""
-      FILEPREFIX=git-master
-      [[ -x $(command -v yum) ]] && PREFIX="sudo yum --nogpgcheck install -y wget unzip gcc gcc-c++ make automake autoconf openssl openssl-devel curl curl-devel gettext-devel expat-devel curl-devel zlib-devel openssl-devel libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev"
-      [[ -x $(command -v apt-get) ]] && PREFIX="sudo apt-get install -y wget unzip libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev"
-      cd /tmp
-      rm -rf $FILEPREFIX
-      wget https://github.com/git/git/archive/master.zip -O $FILEPREFIX.zip
-      unzip $FILEPREFIX.zip && cd $FILEPREFIX
-      make prefix=/usr/local
-      sudo make prefix=/usr/local install
-      cd -
-    elif [[ $(uname) =~ CYGWIN.*$ ]]; then
-      for i in bash libcurl4 libexpat1 libiconv2 libintl8 libopenssl100 perl perl-Error perl-Term-ReadKey python zlib0 cygutils less openssh rsync
-        do 
-          apt-cyg install $i
-        done
-      apt-cyg --mirror ftp://ftp.cygwinports.org/pub/cygwinports
-      apt-cyg install git
-      apt-cyg --mirror ftp://mirror.mcs.anl.gov/pub/cygwin
-    else 
-      warning "$(uname) is not supported"
-    fi
-    GIT_EXISTS=$(type -p /usr/local/bin/git 2>/dev/null)
-    LOCAL_GIT_EXISTS=$(type -p /usr/local/bin/git 2>/dev/null)
-  fi
-}
-
 function install_tmux() {
-  if [[ $LOCAL_TMUX_EXISTS ]]; then
+  if [[ ! $LOCAL_TMUX_EXISTS ]]; then
     notice "tmux already installed."
   else
     if [[ $(uname) = "Darwin" ]]; then
@@ -219,10 +178,6 @@ function install_tmux() {
         install_brew
       fi
 
-      if [[ !$GIT_EXISTS ]]; then
-        install_git
-      fi
-    
       brew update
       brew install tmux reattach-to-user-namespace
 
@@ -230,7 +185,27 @@ function install_tmux() {
       PREFIX=""
       [[ -x $(command -v yum) ]] && PREFIX="yum"
       [[ -x $(command -v apt-get) ]] && PREFIX="apt-get"
-      sudo $PREFIX install -y tmux
+      tempdir=$(mktemp)
+      pushd . >/dev/null
+      cd $tempdir
+      curl -OL https://github.com/downloads/libevent/libevent/libevent-2.0.21-stable.tar.gz
+      tar -xvzf libevent-2.0.21-stable.tar.gz
+      cd libevent-2.0.21-stable
+      ./configure --prefix=/usr/local
+      make
+      sudo make install
+      cd ..
+      
+      # DOWNLOAD SOURCES FOR TMUX AND MAKE AND INSTALL
+      curl -OL https://github.com/tmux/tmux/releases/download/2.4/tmux-2.4.tar.gz
+      tar -xvzf tmux-2.4.tar.gz
+      cd tmux-2.4
+      LDFLAGS="-L/usr/local/lib -Wl,-rpath=/usr/local/lib" ./configure --prefix=/usr/local
+      make
+      sudo make install
+      cd ..
+      popd >/dev/null
+
     elif [[ $(uname) =~ CYGWIN.*$ ]]; then
       apt-cyg install tmux
     else 
@@ -238,9 +213,8 @@ function install_tmux() {
     fi
 
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    curl -L https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf >~/.tmux.conf
 
-    GIT_EXISTS=$(type -p /usr/local/bin/git 2>/dev/null)
-    LOCAL_GIT_EXISTS=$(type -p /usr/local/bin/git 2>/dev/null)
   fi
 }
 
@@ -250,8 +224,8 @@ function install_includes() {
   for include in "${INCLUDES[@]}"; do
     case $include in
       'brew')      install_brew ;;
-      'git')       install_git ;;
       'neobundle') install_neobundle ;;
+      'enhancd')   install_enhancd ;;
       'nvm')       install_nvm ;;
       'ruby')      install_ruby ;;
       'python')    install_python ;;
@@ -272,10 +246,6 @@ function install_neobundle() {
   if [[ -d "$NEOBUNDLE_PATH/$NEOBUNDLE_NAME" ]]; then
     notice "NeoBundle already installed."
   else
-    if [[ !$GIT_EXISTS ]]; then
-      install_git
-    fi
-    
     mkdir -p $NEOBUNDLE_PATH
 
     if [[ -d $NEOBUNDLE_PATH ]]; then
@@ -308,16 +278,19 @@ function install_go() {
       warning "$(uname) is not supported"
     fi
 
-    [[ ! -d $HOME/.go ]] && mkdir $HOME/.go
+    [[ ! -d $HOME/.go ]] && for i in bin src; do mkdir -p $HOME/.go/$i; done
+    curl https://glide.sh/get | sh
 
     GO_EXISTS=$(type -p go 2>/dev/null)
     LOCAL_GO_EXISTS=$(type -p /usr/local/bin/go 2>/dev/null)
+    export GOPATH=$HOME/.go
+    export PATH="$HOME/.go/bin:$PATH"
   fi
 }
 
 function install_python() {
-  if [[ $LOCAL_PYTHON_EXISTS ]]; then
-    notice "Python already installed."
+  if [[ $PYENV_EXISTS ]]; then
+    notice "pyenv already installed."
   else
 
     if [[ $(uname) = "Darwin" ]]; then
@@ -326,7 +299,7 @@ function install_python() {
       fi
     
       brew update
-      brew install python pyenv-virtualenv pyenv
+      brew install python pyenv pipenv
     elif [[ $(uname) = "Linux" ]]; then
       PREFIX=""
       [[ -x $(command -v yum) ]] && PREFIX="yum --nogpgcheck"
@@ -335,52 +308,37 @@ function install_python() {
         python python-pip
 
     elif [[ $(uname) =~ CYGWIN.*$ ]]; then
-      apt-cyg install python
+      apt-cyg install python python-pip
+
     else 
       warning "$(uname) is not supported"
     fi
-
+    git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
     pyenv install 2.7.12
-
-    sudo pip install --upgrade pip virtualenv setuptools virtualenvwrapper
-    export WORKON_HOME="~/.virtualenvs"
-    mkdir -p ~/.virtualenvs
-    export PATH="~/.virtualenvs/home/bin:$PATH"
-    eval "$(pyenv virtualenv-init -)"
-    source /usr/local/bin/virtualenvwrapper.sh
-    mkvirtualenv home
-
-
-    PYTHON_EXISTS=$(type -p python 2>/dev/null)
-    LOCAL_PYTHON_EXISTS=$(type -p /usr/local/bin/python 2>/dev/null)
+    pyenv global 2.7.12
+    pip install pipenv
   fi
 }
 
 function install_powerline() {
-  if [[ -d $HOME/.virtualenvs/home/lib/python2.7/site-packages/powerline ]]; then
-    notice "Powerline already installed."
-  else
+  if [[ $(uname) = "Darwin" || $(uname) = "Linux" ]]; then
+    pip install powerline-status
 
-    if [[ $(uname) = "Darwin" || $(uname) = "Linux" ]]; then
-      if [[ !$PYTHON_EXISTS ]]; then
-        install_python
-      fi
+    # todo bad joojoo
+    #if [[ ! -h ~/.virtualenvs/home/lib/python2.7/site-packages/powerline/config_files ]]; then
+    #  mv ~/.virtualenvs/home/lib/python2.7/site-packages/powerline/config_files ~/.virtualenvs/home/lib/python2.7/site-packages/powerline/config_files.bkup
+    #  ln -s $(pwd)/powerline_config_files ~/.virtualenvs/home/lib/python2.7/site-packages/powerline/config_files
+    #fi
 
-      pip install powerline-status
-
-      if [[ ! -h ~/.virtualenvs/home/lib/python2.7/site-packages/powerline/config_files ]]; then
-        mv ~/.virtualenvs/home/lib/python2.7/site-packages/powerline/config_files ~/.virtualenvs/home/lib/python2.7/site-packages/powerline/config_files.bkup
-        ln -s $(pwd)/powerline_config_files ~/.virtualenvs/home/lib/python2.7/site-packages/powerline/config_files
-      fi
-
-    else 
-      warning "$(uname) is not supported"
-    fi
-
-    POWERLINE_EXISTS=$(type -p powerline 2>/dev/null)
-    LOCAL_POWERLINE_EXISTS=$POWERLINE_EXISTS
+  else 
+    warning "$(uname) is not supported"
   fi
+
+  POWERLINE_EXISTS=$(type -p powerline 2>/dev/null)
+  LOCAL_POWERLINE_EXISTS=$POWERLINE_EXISTS
 }
 
 function install_nvm() {
@@ -410,6 +368,35 @@ function install_nvm() {
 
     NODE_EXISTS=$(test -d ~/.nvm 2>/dev/null)
     LOCAL_NODE_EXISTS=$NODE_EXISTS
+  fi
+}
+
+function install_enhancd() {
+  echo a
+  if [[ -d ~/.aenhancd ]]; then
+    notice "enhancd already installed."
+  else
+    #git clone https://github.com/b4b4r07/enhancd $HOME/.enhancd
+    #fzy
+    if [[ ! -f /usr/local/bin/fzy ]]; then
+      fzy_dir=$(mktemp)
+      rm -rf $fzy_dir
+      git clone --depth 1 https://github.com/jhawthorn/fzy $fzy_dir
+      cd $fzy_dir
+      make
+      sudo make install
+    fi
+    #fzf
+    if [[ ! -d ~/.fzf ]]; then 
+      git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+      ~/.fzf/install
+    fi
+    #percol
+    if [[ !$PYENV_EXISTS ]]; then
+      install_python
+    fi
+    sudo pip install percol
+
   fi
 }
 
@@ -489,7 +476,6 @@ case $OPERATION in
   # Install operations
   $INSTALL)                install ;;
   $INSTALL_BREW_ONLY)      install_brew ;;
-  $INSTALL_GIT_ONLY)       install_git ;;
   $INSTALL_NEOBUNDLE_ONLY) install_neobundle ;;
   $INSTALL_RUBY_ONLY)      install_ruby ;;
   $INSTALL_NVM_ONLY)       install_nvm ;;
@@ -497,6 +483,7 @@ case $OPERATION in
   $INSTALL_GO_ONLY)        install_go ;;
   $INSTALL_POWERLINE_ONLY) install_powerline ;;
   $INSTALL_TMUX_ONLY)      install_tmux ;;
+  $INSTALL_ENHANCD_ONLY)   install_enhancd ;;
   
   # Uninstall operations
   $UNINSTALL)                uninstall ;;  
@@ -512,6 +499,7 @@ case $OPERATION in
     echo "  --install-brew-only         Install Homebrew only"
     echo "  --install-git-only          Install Git (requires Homebrew)"
     echo "  --install-go-only           Install only GoLang"
+    echo "  --install-enhancd-only      Install only enhancd"
     echo "  --install-neobundle-only    Install only NeoBundle"
     echo "  --install-python-only       Install only Python"
     echo "  --install-ruby-only         Install only Ruby"
@@ -521,6 +509,7 @@ case $OPERATION in
     echo "  -b      --brew              Include Homebrew (see --install)"
     echo "  -g      --git               Include Git (see --install; requires brew)"
     echo "  -go     --go                Include GoLang (see --install; requires brew)"
+    echo "  -e      --enhancd           Include enhancd (see --install)"
     echo "  -n      --neobundle         Include NeoBundle (see --install; requires git)"
     echo "  -r      --ruby              Include Ruby (see --install; requires brew)"
     echo "  -p      --python            Include Python (see --install; requires brew)"
