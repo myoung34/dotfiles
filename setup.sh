@@ -36,7 +36,7 @@ function warning() {
 ##
 # Configuration
 ##
-CONFIG_FILES=( cygaliases bash_aliases bash_profile gitaliases gitconfig gitignore_default vimrc exports )
+CONFIG_FILES=( cygaliases bash_aliases bash_profile gitaliases gitconfig gitignore_default vimrc tmux.conf)
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 INCLUDES=()
 OPERATION=0
@@ -213,8 +213,7 @@ function install_tmux() {
     fi
 
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    curl -L https://raw.githubusercontent.com/gpakosz/.tmux/master/.tmux.conf >~/.tmux.conf
-
+    git clone https://github.com/erikw/tmux-powerline.git ~/.tmux_powerline
   fi
 }
 
@@ -373,10 +372,10 @@ function install_nvm() {
 
 function install_enhancd() {
   echo a
-  if [[ -d ~/.aenhancd ]]; then
+  if [[ -d ~/.enhancd ]]; then
     notice "enhancd already installed."
   else
-    #git clone https://github.com/b4b4r07/enhancd $HOME/.enhancd
+    git clone https://github.com/b4b4r07/enhancd $HOME/.enhancd
     #fzy
     if [[ ! -f /usr/local/bin/fzy ]]; then
       fzy_dir=$(mktemp)

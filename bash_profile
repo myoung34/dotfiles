@@ -3,14 +3,16 @@ export PATH=/usr/local/bin:$PATH
 # Tmux
 [[ $(which powerline-daemon) ]] && powerline-daemon -q
 if command -v tmux>/dev/null; then
-  export "TERM=screen-256color"
+  export "TERM=xterm-256color"
   [[ -z $TMUX ]] && exec tmux new-session -A -s main
 fi
 
 # python
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+if [[ $(which pyenv) ]]; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init -)"
+fi
 
 # golang
 if command -v go >/dev/null; then
@@ -63,5 +65,7 @@ fi
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Run twolfson/sexy-bash-prompt
-[[ ! -f ~/.bash_prompt ]] && (cd /tmp && git clone --depth 1 --config core.autocrlf=false https://github.com/twolfson/sexy-bash-prompt && cd sexy-bash-prompt && make install)
+[[ ! -f ~/.bash_prompt ]] && (cd /tmp && rm -rf sexy-bash-prompt  && git clone --depth 1 --config core.autocrlf=false https://github.com/twolfson/sexy-bash-prompt && cd sexy-bash-prompt && make install)
 . ~/.bash_prompt
+cd ~
+export DOCKER_HOST='tcp://0.0.0.0:2375'
