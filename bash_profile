@@ -8,10 +8,17 @@ if command -v tmux>/dev/null; then
 fi
 
 # python
-if [[ $(which pyenv) ]]; then
-  export PYENV_ROOT="$HOME/.pyenv"
+export PYENV_ROOT="$HOME/.pyenv"
+if [[ ! -d "${PYENV_ROOT}" ]]; then
   export PATH="$PYENV_ROOT/bin:$PATH"
   eval "$(pyenv init -)"
+fi
+
+# tfenv
+export TFENV_ROOT="$HOME/.tfenv"
+if [[ ! -d "${TFENV_ROOT}" ]]; then
+  git clone https://github.com/kamatama41/tfenv.git ${TFENV_ROOT}
+  export PATH="$TFENV_ROOT/bin:$PATH"
 fi
 
 # golang
@@ -67,3 +74,7 @@ fi
 # Run twolfson/sexy-bash-prompt
 [[ ! -f ~/.bash_prompt ]] && (cd /tmp && rm -rf sexy-bash-prompt  && git clone --depth 1 --config core.autocrlf=false https://github.com/twolfson/sexy-bash-prompt && cd sexy-bash-prompt && make install)
 . ~/.bash_prompt
+
+# jevn
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
