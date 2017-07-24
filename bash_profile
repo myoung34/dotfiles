@@ -9,7 +9,7 @@ fi
 
 # python
 export PYENV_ROOT="$HOME/.pyenv"
-if [[ ! -d "${PYENV_ROOT}" ]]; then
+if [[ -d "${PYENV_ROOT}" ]]; then
   export PATH="$PYENV_ROOT/bin:$PATH"
   eval "$(pyenv init -)"
 fi
@@ -18,6 +18,7 @@ fi
 export TFENV_ROOT="$HOME/.tfenv"
 if [[ ! -d "${TFENV_ROOT}" ]]; then
   git clone https://github.com/kamatama41/tfenv.git ${TFENV_ROOT}
+else
   export PATH="$TFENV_ROOT/bin:$PATH"
 fi
 

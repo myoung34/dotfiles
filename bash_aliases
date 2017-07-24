@@ -27,3 +27,5 @@ function bounce() {
     BLESS_IDENTITYFILE=${FILE} BLESSFIXEDIP=${BLESSFIXEDIP:-${INTERNAL_IP}} ~/.blessclient/blessclient.run --host $1 --nocache --config ~/.blessclient/blessclient.cfg --region EAST && ssh -i ${FILE} ec2-user@$1
   fi
 }
+
+alias awslogslist="aws logs describe-log-groups | jq -r '.logGroups[].logGroupName'"
