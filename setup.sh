@@ -324,15 +324,11 @@ function install_python() {
 }
 
 function install_powerline() {
-  if [[ $(uname) = "Darwin" || $(uname) = "Linux" ]]; then
-    pip install powerline-status
-
-    # todo bad joojoo
-    #if [[ ! -h ~/.virtualenvs/home/lib/python2.7/site-packages/powerline/config_files ]]; then
-    #  mv ~/.virtualenvs/home/lib/python2.7/site-packages/powerline/config_files ~/.virtualenvs/home/lib/python2.7/site-packages/powerline/config_files.bkup
-    #  ln -s $(pwd)/powerline_config_files ~/.virtualenvs/home/lib/python2.7/site-packages/powerline/config_files
-    #fi
-
+  pip install powerline-status
+  [[ ! -d "$HOME/.tmux_powerline" ]] && git clone https://github.com/erikw/tmux-powerline.git $HOME/.tmux_powerline
+  if [[ $(uname) = "Darwin" ]]; then
+    brew tap homebrew/dupes
+    brew install homebrew/dupes/grep
   else 
     warning "$(uname) is not supported"
   fi

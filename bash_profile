@@ -15,6 +15,14 @@ if [[ -d "${PYENV_ROOT}" ]]; then
   export PATH=$PATH:$(pyenv which pip | sed 's/pip$//g')
 fi
 
+# tfenv
+export TFENV_ROOT="$HOME/.tfenv"
+if [[ ! -d "${TFENV_ROOT}" ]]; then
+  git clone https://github.com/kamatama41/tfenv.git ${TFENV_ROOT}
+else
+  export PATH="$TFENV_ROOT/bin:$PATH"
+fi
+
 # golang
 if command -v go >/dev/null; then
   export GOPATH=$HOME/.go
@@ -68,6 +76,11 @@ fi
 # Run twolfson/sexy-bash-prompt
 [[ ! -f ~/.bash_prompt ]] && (cd /tmp && rm -rf sexy-bash-prompt  && git clone --depth 1 --config core.autocrlf=false https://github.com/twolfson/sexy-bash-prompt && cd sexy-bash-prompt && make install)
 . ~/.bash_prompt
-cd ~
+
+[[ $(uname -r | grep Microsoft) ]] && cd ~
 
 export PATH="$HOME/.tfenv/bin:$PATH"
+
+# jevn
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"

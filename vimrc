@@ -70,8 +70,6 @@ runtime macros/matchit.vim
 "set guifont=Consolas:h14:cANSI
 set backspace=indent,eol,start
 
-set nocompatible               " Be iMproved
-
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
@@ -83,7 +81,11 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " Recommended to install
 " After install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
-NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/vimproc.vim', {
+\ 'build' : {
+\     'mac' : 'make',
+\    },
+\ }
 NeoBundle 'vim-airline/vim-airline'
 NeoBundle 'vim-airline/vim-airline-themes'
 NeoBundle 'scrooloose/syntastic'
@@ -92,7 +94,6 @@ NeoBundle 'rodjek/vim-puppet'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'jistr/vim-nerdtree-tabs'
-NeoBundle 'pld-linux/vim-syntax-vcl'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'hashivim/vim-terraform'
@@ -100,6 +101,7 @@ NeoBundle 'hashivim/vim-packer'
 NeoBundle 'hashivim/vim-vagrant'
 NeoBundle 'hashivim/vim-consul'
 NeoBundle 'hashivim/vim-vaultproject'
+NeoBundle 'saltstack/salt-vim'
 
 filetype plugin indent on     " Required!
 "
