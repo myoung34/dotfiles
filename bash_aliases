@@ -8,3 +8,6 @@ function brew_upgrade_safe () {
 }
 
 alias rlp=". ~/.bash_profile"
+function fix_screen() {
+  [[ ! -d /var/run/screen ]] && (sudo mkdir /var/run/screen && sudo chmod 777 /var/run/screen)
+}
