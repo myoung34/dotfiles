@@ -271,8 +271,9 @@ function install_go() {
       PREFIX=""
       [[ -x $(command -v yum) ]] && PREFIX="yum --nogpgcheck"
       [[ -x $(command -v apt-get) ]] && PREFIX=apt-get
-      sudo $PREFIX -y install \
-        golang
+      sudo add-apt-repository ppa:longsleep/golang-backports
+      sudo $PREFIX update
+      sudo $PREFIX -y install golang-go
     else 
       warning "$(uname) is not supported"
     fi
