@@ -77,7 +77,8 @@ INSTALL_GO_ONLY=8
 INSTALL_NVM_ONLY=9
 INSTALL_POWERLINE_ONLY=10
 INSTALL_TMUX_ONLY=11
-UNINSTALL_NEOBUNDLE_ONLY=12
+INSTALL_JAVA_ONLY=12
+UNINSTALL_NEOBUNDLE_ONLY=13
 
 ##
 # Parse arguments
@@ -95,14 +96,16 @@ for arg in "$@"; do
     --install-powerline-only) OPERATION=$INSTALL_POWERLINE_ONLY ;;
     --install-tmux-only)      OPERATION=$INSTALL_TMUX_ONLY ;;
     --install-enhancd-only)   OPERATION=$INSTALL_ENHANCD_ONLY ;;
+    --install-java-only)      OPERATION=$INSTALL_JAVA_ONLY ;;
 
     # Uninstall arguments
     -u|--uninstall)             OPERATION=$UNINSTALL ;;
     --uninstall-neobundle-only) OPERATION=$UNINSTALL_NEOBUNDLE_ONLY ;;
     
     # Includes arguments
-    -a|--all)             INCLUDES=('brew' 'git' 'neobundle' 'ruby' 'python' 'go' 'nvm' 'powerline' 'tmux' 'enhancd') ;;
+    -a|--all)             INCLUDES=('brew' 'git' 'neobundle' 'ruby' 'python' 'go' 'nvm' 'powerline' 'tmux' 'enhancd' 'java') ;;
     -b|--brew)            INCLUDES=("${INCLUDES[@]}" 'brew') ;;
+    -j|--java)            INCLUDES=("${INCLUDES[@]}" 'brew') ;;
     -g|--git)             INCLUDES=("${INCLUDES[@]}" 'git') ;;
     -n|--neobundle)       INCLUDES=("${INCLUDES[@]}" 'neobundle') ;;
     -r|--ruby)            INCLUDES=("${INCLUDES[@]}" 'ruby') ;;
@@ -123,6 +126,10 @@ done
 ##
 # Installation methods
 ##
+function install_java() {
+  [[ ! -d "$HOME/.jenv" ]] && git clone https://github.com/gcuisinier/jenv.git $HOME/.jenv
+}
+
 function install_brew() {
   if [[ $BREW_EXISTS ]]; then
     notice "Brew already installed."
@@ -231,6 +238,7 @@ function install_includes() {
       'powerline') install_powerline ;;
       'go')        install_go ;;
       'tmux')      install_tmux ;;
+      'java')      install_java ;;
       *) ;;
     esac
   done
@@ -476,6 +484,7 @@ case $OPERATION in
   $INSTALL_RUBY_ONLY)      install_ruby ;;
   $INSTALL_NVM_ONLY)       install_nvm ;;
   $INSTALL_PYTHON_ONLY)    install_python ;;
+  $INSTALL_JAVA_ONLY)      install_java ;;
   $INSTALL_GO_ONLY)        install_go ;;
   $INSTALL_POWERLINE_ONLY) install_powerline ;;
   $INSTALL_TMUX_ONLY)      install_tmux ;;
@@ -499,6 +508,7 @@ case $OPERATION in
     echo "  --install-neobundle-only    Install only NeoBundle"
     echo "  --install-python-only       Install only Python"
     echo "  --install-ruby-only         Install only Ruby"
+    echo "  --install-java-only         Install only Java"
     echo "  -u      --uninstall         Uninstall configuration"
     echo "  --uninstall-neobundle-only  Uninstall only NeoBundle"
     echo "  -a      --all               Include all includes (see --install)"
@@ -506,6 +516,7 @@ case $OPERATION in
     echo "  -g      --git               Include Git (see --install; requires brew)"
     echo "  -go     --go                Include GoLang (see --install; requires brew)"
     echo "  -e      --enhancd           Include enhancd (see --install)"
+    echo "  -j      --java              Include java (see --install)"
     echo "  -n      --neobundle         Include NeoBundle (see --install; requires git)"
     echo "  -r      --ruby              Include Ruby (see --install; requires brew)"
     echo "  -p      --python            Include Python (see --install; requires brew)"
