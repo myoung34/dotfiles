@@ -61,7 +61,7 @@ LOCAL_RUBY_EXISTS=$(type -p /usr/local/bin/ruby 2>/dev/null)
 LOCAL_GO_EXISTS=$(type -p /usr/local/bin/go 2>/dev/null)
 LOCAL_NVM_EXISTS=$NVM_EXISTS
 LOCAL_POWERLINE_EXISTS=$POWERLINE_EXISTS
-LOCAL_TMUX_EXISTS=$TMUX_EXISTS
+LOCAL_TMUX_EXISTS=false
 
 ##
 # Actions
@@ -332,7 +332,7 @@ function install_python() {
 }
 
 function install_powerline() {
-  pip install powerline-status
+  sudo pip install powerline-status
   [[ ! -d "$HOME/.tmux_powerline" ]] && git clone https://github.com/erikw/tmux-powerline.git $HOME/.tmux_powerline
   if [[ $(uname) = "Darwin" ]]; then
     brew tap homebrew/dupes
