@@ -24,9 +24,7 @@ if command -v go >/dev/null; then
 fi
 
 #aliases
-if [[ $(uname | grep -E -i '^Cygwin') ]]; then
-  source $HOME/.cygaliases
-elif [[ $(uname) == "Darwin" ]]; then
+if [[ $(uname) == "Darwin" ]]; then
   [[ $(which gotty) ]] || [[ $(which go) ]] && go get github.com/yudai/gotty
   stty werase undef
   bind '\C-w:unix-filename-rubout' # Fix ctrl+w to not clear whole word but separators
