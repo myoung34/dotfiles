@@ -3,7 +3,7 @@
 ##
 # Configuration
 ##
-CONFIG_FILES=( bash_aliases bash_profile gitaliases gitconfig gitignore_default vimrc tmux.conf Xresources Xdefault)
+CONFIG_FILES=( bash_aliases bash_profile gitaliases gitconfig gitignore_default vimrc tmux.conf Xresources )
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 OPERATION=0
 SOURCE_DIR="$HOME/Source"
@@ -121,6 +121,13 @@ function install_neobundle() {
 
 function install_powerline() {
   pip install powerline-status
+  dir=$(mktemp -d)
+  pushd . >/dev/null
+  cd $dir
+  git clone https://github.com/powerline/fonts
+  cd fonts
+  ./install.sh
+  popd >/dev/null
   [[ ! -d "$HOME/.tmux_powerline" ]] && git clone https://github.com/erikw/tmux-powerline.git $HOME/.tmux_powerline
   if [[ $(uname) = "Darwin" ]]; then
     brew tap homebrew/dupes
@@ -129,8 +136,6 @@ function install_powerline() {
     sudo pacman -Syu powerline
   fi
 
-  POWERLINE_EXISTS=$(type -p powerline 2>/dev/null)
-  LOCAL_POWERLINE_EXISTS=$POWERLINE_EXISTS
 }
 
 function install_enhancd() {
