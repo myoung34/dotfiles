@@ -17,22 +17,6 @@ if [[ "${SESSION_TYPE}" == "local" ]]; then
   fi
 fi
 
-# python
-export PYENV_ROOT="$HOME/.pyenv"
-if [[ -d "${PYENV_ROOT}" ]]; then
-  export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init -)"
-  export PATH=$PATH:$(pyenv which pip | sed 's/pip$//g')
-fi
-
-# tfenv
-export TFENV_ROOT="$HOME/.tfenv"
-if [[ ! -d "${TFENV_ROOT}" ]]; then
-  git clone https://github.com/kamatama41/tfenv.git ${TFENV_ROOT}
-else
-  export PATH="$TFENV_ROOT/bin:$PATH"
-fi
-
 # golang
 if command -v go >/dev/null; then
   export GOPATH=$HOME/.go
@@ -63,12 +47,6 @@ if [[ ! -f $HOME/.docker-compose-completion.bash ]]; then
   fi
 fi
 
-# RVM
-if [[ -d "$HOME/.rvm" ]]; then
-  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-  export PATH="$PATH:$HOME/.rvm/bin:$GEM_HOME/bin" # Add RVM to PATH for scripting
-fi
-
 # custom exports such as API keys
 [[ -f $HOME/.exports ]] && . $HOME/.exports
 
@@ -84,13 +62,16 @@ fi
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Run twolfson/sexy-bash-prompt
-[[ ! -f ~/.bash_prompt ]] && (cd /tmp && rm -rf sexy-bash-prompt  && git clone --depth 1 --config core.autocrlf=false https://github.com/twolfson/sexy-bash-prompt && cd sexy-bash-prompt && make install)
 . ~/.bash_prompt
 
 [[ $(uname -r | grep Microsoft) ]] && cd ~
 
+# asdf-vm
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+
+# tfenv
 export PATH="$HOME/.tfenv/bin:$PATH"
 
-# jevn
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
+# i3wm background fix
+[[ ! $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx && xsetroot -gray
