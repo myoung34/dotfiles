@@ -49,6 +49,12 @@ function install_asdf() {
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.2
 }
 
+function install_vault() {
+  asdf plugin-add vault
+  asdf install vault 0.11.5
+  asdf global vault 0.11.5
+}
+
 function install_python() {
   asdf plugin-add python
   asdf install python 3.6.2
@@ -171,6 +177,7 @@ function install() {
   install_configuration
   install_asdf
   install_python
+  install_vault
   install_enhancd
   install_powerline
   install_neobundle

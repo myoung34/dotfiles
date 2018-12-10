@@ -1,23 +1,25 @@
 export PATH=/usr/local/bin:$PATH
 
 # Tmux
-SESSION_TYPE=local
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-  SESSION_TYPE=ssh
-else
-  case $(ps -o comm= -p $PPID) in
-    sshd|*/sshd) SESSION_TYPE=ssh;;
-  esac
-fi
-if [[ "${SESSION_TYPE}" == "local" ]]; then
-  [[ $(which powerline-daemon) ]] && powerline-daemon -q
-  if command -v tmux>/dev/null; then
-    export "TERM=xterm-256color"
-    [[ -z $TMUX ]] && exec tmux new-session -A -s main
+if [[ "${COLORTERM}" == "rxvt"  ]]; then
+  SESSION_TYPE=local
+  if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    SESSION_TYPE=ssh
+  else
+    case $(ps -o comm= -p $PPID) in
+      sshd|*/sshd) SESSION_TYPE=ssh;;
+    esac
+  fi
+  if [[ "${SESSION_TYPE}" == "local" ]]; then
+    [[ $(which powerline-daemon) ]] && powerline-daemon -q
+    if command -v tmux>/dev/null; then
+      #export "TERM=xterm-256color"
+      [[ -z $TMUX ]] && exec tmux new-session -A -s main
+    fi
   fi
 fi
 
-# golang
+## golang
 if command -v go >/dev/null; then
   export GOPATH=$HOME/.go
   export PATH="$HOME/.go/bin:$PATH"

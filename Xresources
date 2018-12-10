@@ -15,15 +15,14 @@ Xft.antialias:  true
 Xft.hinting:    true
 Xft.rgba:       rgb
 Xft.hintstyle:  hintfull
-Xft.dpi:        140
+!Xft.dpi:        140
 
 ! urxvt.font:  xft:Source Code Pro:size=8
 ! urxvt.font:  xft:DejaVuSansMono:size=26
 ! urxvt.font:  xft:DejaVuSansMono:size=10
 ! urxvt.font:  xft:DejaVuSansMono:size=8
 ! urxvt.font:  xft:Terminus:size=8,xft:Inconsolata\ for\ Powerline:pixelsize=12
-! urxvt.font:  xft:DejaVuSansMono\ for\ Powerline:size=8,xft:Inconsolata\ for\ Powerline:pixelsize=12
-urxvt.font:  xft:DejaVu\ Sans\ Mono\ for\ Powerline:size=8,xft:Inconsolata\ for\ Powerline:pixelsize=16
+URxvt.font:  xft:DejaVuSansMono\ for\ Powerline:size=8,xft:Inconsolata\ for\ Powerline:pixelsize=12
 
 URxvt.scrollBar:  false
 URxvt.jumpScroll: true
