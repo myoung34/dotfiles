@@ -55,6 +55,14 @@ function install_vault() {
   asdf global vault 0.11.5
 }
 
+function install_ruby() {
+  asdf plugin-add ruby
+  asdf install ruby 2.4.0
+  asdf global ruby 2.4.0
+  asdf reshim ruby
+  gem install bundler
+}
+
 function install_python() {
   asdf plugin-add python
   asdf install python 3.6.2
@@ -177,6 +185,7 @@ function install() {
   install_configuration
   install_asdf
   install_python
+  install_ruby
   install_vault
   install_enhancd
   install_powerline
