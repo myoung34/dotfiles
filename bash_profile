@@ -1,8 +1,8 @@
 export PATH=/usr/local/bin:$PATH
 
 # Tmux
+SESSION_TYPE=local
 if [[ "${COLORTERM}" == "rxvt"  ]]; then
-  SESSION_TYPE=local
   if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     SESSION_TYPE=ssh
   else
@@ -74,4 +74,11 @@ fi
 export PATH="$HOME/.tfenv/bin:$PATH"
 
 # i3wm background fix
-[[ ! $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx && xsetroot -gray
+[[ ! $DISPLAY ]] && [[ $XDG_VTNR -eq 1 ]] && [[ "${SESSION_TYPE}" == "ssh" ]] && exec startx && xsetroot -gray
+
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[ -f /home/marc/.asdf/installs/nodejs/11.4.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.bash ] && . /home/marc/.asdf/installs/nodejs/11.4.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.bash
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[ -f /home/marc/.asdf/installs/nodejs/11.4.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.bash ] && . /home/marc/.asdf/installs/nodejs/11.4.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.bash

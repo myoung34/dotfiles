@@ -3,7 +3,7 @@
 ##
 # Configuration
 ##
-CONFIG_FILES=( bash_aliases bash_profile gitaliases gitconfig gitignore_default vimrc tmux.conf Xresources )
+CONFIG_FILES=( bash_aliases bash_profile gitaliases gitconfig gitignore_default vimrc tmux.conf Xresources xinitrc )
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 OPERATION=0
 SOURCE_DIR="$HOME/Source"

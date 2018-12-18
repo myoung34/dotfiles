@@ -3,6 +3,14 @@ function upsearch () {
   echo $found
 }
 
+lower_res() {
+  xrandr --output HDMI-1 --mode 2560x1440
+}
+
+raise_res() {
+  xrandr --output HDMI-1 --mode 3840x2160
+}
+
 function brew_upgrade_safe () {
   brew upgrade $(brew list | xargs echo | sed 's/packer//g' | sed 's/terraform//g' | sed 's/vault//g')
 }
