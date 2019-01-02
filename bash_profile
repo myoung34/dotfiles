@@ -2,7 +2,7 @@ export PATH=/usr/local/bin:$PATH
 
 # Tmux
 SESSION_TYPE=local
-if [[ "${COLORTERM}" == "rxvt"  ]]; then
+if [[ $(uname) == "Darwin" ]] || [[ "${COLORTERM}" == "rxvt"  ]]; then
   if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     SESSION_TYPE=ssh
   else

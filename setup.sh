@@ -105,10 +105,11 @@ function install_configuration() {
 
 function install_tmux() {
   PREFIX=""
-  [[ -x $(command -v yum) ]] && PREFIX="yum install -y "
-  [[ -x $(command -v apt-get) ]] && PREFIX="apt-get install -y "
-  [[ -x $(command -v pacman) ]] && PREFIX="pacman -Syu "
-  sudo $PREFIX tmux
+  [[ -x $(command -v yum) ]] && PREFIX="sudo yum install -y "
+  [[ -x $(command -v brew) ]] && PREFIX="brew install "
+  [[ -x $(command -v apt-get) ]] && PREFIX="sudo apt-get install -y "
+  [[ -x $(command -v pacman) ]] && PREFIX="sudo pacman -Syu "
+  $PREFIX tmux
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
   git clone https://github.com/erikw/tmux-powerline.git ~/.tmux_powerline
 }
