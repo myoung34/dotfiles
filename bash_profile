@@ -82,3 +82,7 @@ export PATH="$HOME/.tfenv/bin:$PATH"
 # tabtab source for sls package
 # uninstall by removing these lines or running `tabtab uninstall sls`
 [ -f /home/marc/.asdf/installs/nodejs/11.4.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.bash ] && . /home/marc/.asdf/installs/nodejs/11.4.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.bash
+# Add Visual Studio Code (code)
+[[ -d "/Applications/Visual Studio Code.app/Contents/Resources/app/bin" ]] && export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+export AWS_DEFAULT_REGION=us-east-1

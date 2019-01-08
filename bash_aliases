@@ -15,6 +15,10 @@ function brew_upgrade_safe () {
   brew upgrade $(brew list | xargs echo | sed 's/packer//g' | sed 's/terraform//g' | sed 's/vault//g')
 }
 
+function bpr () {
+  open -a "Google Chrome" https://bitbucket.org/built/built-$1/pull-requests/new
+}
+
 alias rlp=". ~/.bash_profile"
 function fix_screen() {
   [[ ! -d /var/run/screen ]] && (sudo mkdir /var/run/screen && sudo chmod 777 /var/run/screen)
