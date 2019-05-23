@@ -170,7 +170,7 @@ function install_enhancd() {
     #fzf
     if [[ ! -d ~/.fzf ]]; then 
       git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-      ~/.fzf/install
+      bash ~/.fzf/install
     fi
     #percol
     pip install percol

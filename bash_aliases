@@ -3,6 +3,10 @@ function upsearch () {
   echo $found
 }
 
+ack() {
+  rg $@
+}
+
 lower_res() {
   xrandr --output HDMI-1 --mode 2560x1440
 }

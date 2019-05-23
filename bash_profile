@@ -2,7 +2,7 @@ export PATH=/usr/local/bin:$PATH
 
 # Tmux
 SESSION_TYPE=local
-if [[ $(uname) == "Darwin" ]] || [[ "${COLORTERM}" == "rxvt"  ]]; then
+if [[ $(uname) == "Darwin" ]] || [[ "${COLORTERM}" == "rxvt"  ]] || [[ $(uname -a) == *"Microsoft"* ]]; then
   if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     SESSION_TYPE=ssh
   else
@@ -13,24 +13,15 @@ if [[ $(uname) == "Darwin" ]] || [[ "${COLORTERM}" == "rxvt"  ]]; then
   if [[ "${SESSION_TYPE}" == "local" ]]; then
     [[ $(which powerline-daemon) ]] && powerline-daemon -q
     if command -v tmux>/dev/null; then
-      #export "TERM=xterm-256color"
+      export "TERM=xterm-256color"
       [[ -z $TMUX ]] && exec tmux new-session -A -s main
     fi
   fi
 fi
 
-## golang
-if command -v go >/dev/null; then
-  export GOPATH=$HOME/.go
-  export PATH="$HOME/.go/bin:$PATH"
-fi
-
 #aliases
-if [[ $(uname) == "Darwin" ]]; then
-  [[ $(which gotty) ]] || [[ $(which go) ]] && go get github.com/yudai/gotty
-  stty werase undef
-  bind '\C-w:unix-filename-rubout' # Fix ctrl+w to not clear whole word but separators
-fi
+stty werase undef
+bind '\C-w:unix-filename-rubout' # Fix ctrl+w to not clear whole word but separators
 [[ -f $HOME/.bash_aliases ]] && source $HOME/.bash_aliases
 
 #completion
@@ -75,14 +66,6 @@ export PATH="$HOME/.tfenv/bin:$PATH"
 
 # i3wm background fix
 [[ ! $DISPLAY ]] && [[ $XDG_VTNR -eq 1 ]] && [[ "${SESSION_TYPE}" == "ssh" ]] && exec startx && xsetroot -gray
-
-# tabtab source for serverless package
-# uninstall by removing these lines or running `tabtab uninstall serverless`
-[ -f /home/marc/.asdf/installs/nodejs/11.4.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.bash ] && . /home/marc/.asdf/installs/nodejs/11.4.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/serverless.bash
-# tabtab source for sls package
-# uninstall by removing these lines or running `tabtab uninstall sls`
-[ -f /home/marc/.asdf/installs/nodejs/11.4.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.bash ] && . /home/marc/.asdf/installs/nodejs/11.4.0/.npm/lib/node_modules/serverless/node_modules/tabtab/.completions/sls.bash
-# Add Visual Studio Code (code)
 [[ -d "/Applications/Visual Studio Code.app/Contents/Resources/app/bin" ]] && export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 export AWS_DEFAULT_REGION=us-east-1
