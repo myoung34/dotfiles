@@ -47,6 +47,7 @@ function install_tfenv() {
 
 function install_asdf() {
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.2
+  . ~/.asdf/asdf.sh
 }
 
 function install_vault() {
@@ -65,8 +66,9 @@ function install_ruby() {
 
 function install_python() {
   asdf plugin-add python
-  asdf install python 3.6.2
-  asdf global python 3.6.2
+  [[ -x $(command -v apt-get) ]] && udo apt-get install -y build-essential
+  asdf install python 3.7.2
+  asdf global python 3.7.2
   asdf reshim python
   pip install virtualenv
 }
@@ -104,11 +106,6 @@ function install_configuration() {
 }
 
 function install_tmux() {
-  PREFIX=""
-  [[ -x $(command -v yum) ]] && PREFIX="sudo yum install -y "
-  [[ -x $(command -v brew) ]] && PREFIX="brew install "
-  [[ -x $(command -v apt-get) ]] && PREFIX="sudo apt-get install -y "
-  [[ -x $(command -v pacman) ]] && PREFIX="sudo pacman -Syu "
   $PREFIX tmux
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
   git clone https://github.com/erikw/tmux-powerline.git ~/.tmux_powerline
@@ -183,6 +180,12 @@ function install_urxvt {
 }
 
 function install() {
+  PREFIX=""
+  [[ -x $(command -v yum) ]] && PREFIX="sudo yum install -y "
+  [[ -x $(command -v brew) ]] && PREFIX="brew install "
+  [[ -x $(command -v apt-get) ]] && PREFIX="sudo apt-get install -y "
+  [[ -x $(command -v pacman) ]] && PREFIX="sudo pacman -Syu "
+  export PREFIX
   install_configuration
   install_asdf
   install_python
