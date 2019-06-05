@@ -1,3 +1,3 @@
 @echo off
-cd "C:\Program Files (x86)\AutoHotkey"
+cd "C:\Program Files\AutoHotkey"
 start AutoHotkey.exe AutoHotkey.ahk

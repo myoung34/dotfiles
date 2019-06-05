@@ -13,10 +13,6 @@
 ; and it launches a new Notepad window (or activates an existing one).  To
 ; try out these hotkeys, run AutoHotkey again, which will load this file.
 
-LAlt::RWin
-RAlt::RWin
-LWin::LAlt
-RWin::LAlt
 Capslock::Ctrl
 ^[::Send {Esc}
 
