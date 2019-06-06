@@ -66,7 +66,7 @@ function install_ruby() {
 
 function install_python() {
   asdf plugin-add python
-  [[ -x $(command -v apt-get) ]] && udo apt-get install -y build-essential
+  [[ -x $(command -v apt-get) ]] && sudo apt-get install -y build-essential zlib1g-dev unzip libffi-dev libssl-dev
   asdf install python 3.7.2
   asdf global python 3.7.2
   asdf reshim python
