@@ -186,6 +186,7 @@ function install() {
   [[ -x $(command -v apt-get) ]] && PREFIX="sudo apt-get install -y "
   [[ -x $(command -v pacman) ]] && PREFIX="sudo pacman -Syu "
   export PREFIX
+  $PREFIX curl vim git
   install_configuration
   install_asdf
   install_python
