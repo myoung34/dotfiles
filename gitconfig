@@ -20,5 +20,3 @@
 	name = Marcus Young
 [github]
 	user = myoung34
-[ghi]
-	token = !security find-internet-password -a myoung34 -s github.com -l 'ghi token' -w

@@ -3,7 +3,7 @@
 ##
 # Configuration
 ##
-CONFIG_FILES=( bash_aliases bash_profile gitaliases gitconfig gitignore_default vimrc tmux.conf Xresources xinitrc inputrc )
+CONFIG_FILES=( bash_aliases custom.sh gitaliases gitconfig gitignore_default vimrc tmux.conf )
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 OPERATION=0
 SOURCE_DIR="$HOME/Source"
@@ -36,8 +36,10 @@ function install_brew() {
 }
 
 
-function install_sexy_bash_prompt() {
-  [[ ! -f ~/.bash_prompt ]] && (cd /tmp && rm -rf sexy-bash-prompt  && git clone --depth 1 --config core.autocrlf=false https://github.com/twolfson/sexy-bash-prompt && cd sexy-bash-prompt && make install)
+function install_oh_my_zsh() {
+  rm ~/.zshrc
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  echo 'source ~/.custom.sh' >>~/.zshrc
 }
 
 function install_tfenv() {
@@ -76,8 +78,6 @@ function install_python() {
 function install_configuration() {
   echo "Installing configuration..."
   
-  [[ -d "$HOME/.config/i3/" ]] && cp $DIR/i3config $HOME/.config/i3/config 
-
   for config_file in "${CONFIG_FILES[@]}"; do
     local SOURCE="$DIR/$config_file"
     local DESTINATION="$HOME/.$config_file"
@@ -97,12 +97,6 @@ function install_configuration() {
       fi
     fi
   done
-
-  if [[ ! -h "$HOME/.bashrc" ]]; then
-    echo "Adding sym-link for .bash_profile to .bashrc"
-    ln -s $DIR/bash_profile $HOME/.bashrc
-  fi
-  
 }
 
 function install_tmux() {
@@ -123,7 +117,7 @@ function install_neobundle() {
     mkdir -p $NEOBUNDLE_PATH
 
     if [[ -d $NEOBUNDLE_PATH ]]; then
-      git clone git://github.com/Shougo/$NEOBUNDLE_NAME $NEOBUNDLE_PATH/$NEOBUNDLE_NAME
+      git clone https://github.com/Shougo/$NEOBUNDLE_NAME $NEOBUNDLE_PATH/$NEOBUNDLE_NAME
     else
       echo "Could not find $NEOBUNDLE_PATH"
     fi
@@ -174,11 +168,6 @@ function install_enhancd() {
   fi
 }
 
-function install_urxvt {
-  sudo cp urxvt/pasta /usr/lib/urxvt/perl/
-  sudo cp urxvt/xkr-clipboard /usr/lib/urxvt/perl/
-}
-
 function install() {
   PREFIX=""
   [[ -x $(command -v yum) ]] && PREFIX="sudo yum install -y "
@@ -196,9 +185,8 @@ function install() {
   install_powerline
   install_neobundle
   install_tmux
-  install_sexy_bash_prompt
+  install_oh_my_zsh
   install_tfenv
-  install_urxvt
 }
 
 ##
@@ -216,11 +204,6 @@ function uninstall_configuration() {
     fi
 
   done
-
-  if [[ -h $HOME/.bashrc ]]; then
-    echo "Removing existing sym-link for bashrc."
-    unlink $HOME/.bashrc
-  fi
 
 }
 
