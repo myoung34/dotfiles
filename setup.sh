@@ -58,6 +58,12 @@ function install_golang() {
   asdf global golang 1.19
 }
 
+function install_awscli() {
+  asdf plugin-add awscli
+  asdf install awscli 2.7.32
+  asdf global awscli 2.7.32
+}
+
 function install_awsvault() {
   asdf plugin-add aws-vault
   asdf install golang 6.5.0
@@ -201,6 +207,7 @@ function install() {
   install_tfenv
   install_golang
   install_awsvault
+  install_awscli
 }
 
 ##
