@@ -52,6 +52,18 @@ function install_asdf() {
   . ~/.asdf/asdf.sh
 }
 
+function install_golang() {
+  asdf plugin-add golang
+  asdf install golang 1.19
+  asdf global golang 1.19
+}
+
+function install_awsvault() {
+  asdf plugin-add aws-vault
+  asdf install golang 6.5.0
+  asdf global golang 6.5.0
+}
+
 function install_vault() {
   asdf plugin-add vault
   asdf install vault 0.11.5
@@ -187,6 +199,8 @@ function install() {
   install_tmux
   install_oh_my_zsh
   install_tfenv
+  install_golang
+  install_awsvault
 }
 
 ##
