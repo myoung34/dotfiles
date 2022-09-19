@@ -52,45 +52,12 @@ function install_asdf() {
   . ~/.asdf/asdf.sh
 }
 
-function install_golang() {
-  asdf plugin-add golang
-  asdf install golang 1.19
-  asdf global golang 1.19
-}
-
-function install_awscli() {
-  asdf plugin-add awscli
-  asdf install awscli 2.7.32
-  asdf global awscli 2.7.32
-}
-
-function install_awsvault() {
-  asdf plugin-add aws-vault
-  asdf install golang 6.5.0
-  asdf global golang 6.5.0
-}
-
-function install_vault() {
-  asdf plugin-add vault
-  asdf install vault 0.11.5
-  asdf global vault 0.11.5
-}
-
-function install_ruby() {
-  asdf plugin-add ruby
-  asdf install ruby 2.4.0
-  asdf global ruby 2.4.0
-  asdf reshim ruby
-  gem install bundler
-}
-
-function install_python() {
-  asdf plugin-add python
-  [[ -x $(command -v apt-get) ]] && sudo apt-get install -y build-essential zlib1g-dev unzip libffi-dev libssl-dev
-  asdf install python 3.7.2
-  asdf global python 3.7.2
-  asdf reshim python
-  pip install virtualenv
+function install_from_asdf() {
+  plugin="$1"
+  version="$2"
+  asdf plugin-add "${plugin}"
+  asdf install "${plugin}" "${version}"
+  asdf global "${plugin}" "${version}"
 }
 
 function install_configuration() {
@@ -193,21 +160,21 @@ function install() {
   [[ -x $(command -v apt-get) ]] && PREFIX="sudo apt-get install -y "
   [[ -x $(command -v pacman) ]] && PREFIX="sudo pacman -Syu "
   export PREFIX
-  $PREFIX curl vim git
+  $PREFIX curl vim git build-essential zlib1g-dev unzip libffi-dev libssl-dev
   install_configuration
   install_asdf
-  install_python
-  install_ruby
-  install_vault
+  install_from_asdf python 3.7.2
+  install_from_asdf ruby 2.4.0
+  install_from_asdf vault 0.11.5
   install_enhancd
   install_powerline
   install_neobundle
   install_tmux
   install_oh_my_zsh
   install_tfenv
-  install_golang
-  install_awsvault
-  install_awscli
+  install_from_asdf golang 1.19
+  install_from_asdf aws-vault 6.5.0
+  install_from_asdf awscli 2.7.32
 }
 
 ##
