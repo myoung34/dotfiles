@@ -7,4 +7,8 @@ ack() {
   rg $@
 }
 
-alias rlp=". ~/.bash_profile"
+alias k="kubectl"
+
+alias rlp="source ~/.bash_aliases"
+
+export AWS_REGION=us-east-1

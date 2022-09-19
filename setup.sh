@@ -175,6 +175,11 @@ function install() {
   install_from_asdf golang 1.19
   install_from_asdf aws-vault 6.5.0
   install_from_asdf awscli 2.7.32
+  install_from_asdf kubectl 1.25.1
+  install_from_asdf helm 3.9.4
+  install_from_asdf kustomize 4.5.7
+  install_from_asdf k9s 0.26.3
+  install_from_asdf kubectx 0.9.4
 }
 
 ##
