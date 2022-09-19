@@ -37,9 +37,9 @@ function install_brew() {
 
 
 function install_oh_my_zsh() {
-  rm ~/.zshrc
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  echo 'source ~/.custom.sh' >>~/.zshrc
+  rm ~/.zshrc
+  ln -s ${DIR}/zshrc ~/.zshrc
 }
 
 function install_tfenv() {
