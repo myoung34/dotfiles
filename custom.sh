@@ -5,10 +5,6 @@ export "TERM=xterm-256color"
 
 #aliases
 stty werase undef
-[[ -f $HOME/.bash_aliases ]] && source $HOME/.bash_aliases
-
-# custom exports such as API keys
-[[ -f $HOME/.exports ]] && . $HOME/.exports
 
 # asdf-vm
 . $HOME/.asdf/asdf.sh
@@ -16,3 +12,19 @@ stty werase undef
 
 # tfenv
 export PATH="$HOME/.tfenv/bin:$PATH"
+
+function upsearch () {
+  found=$(test / == "$PWD" && return || test -e "$1" && echo "$PWD" && return || cd .. && upsearch "$1")
+  echo $found
+}
+
+ack() {
+  rg $@
+}
+
+alias k="kubectl"
+
+alias rlp="source ~/.custom.sh"
+
+# custom exports such as API keys
+[[ -f $HOME/.exports ]] && . $HOME/.exports
