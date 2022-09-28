@@ -183,6 +183,7 @@ function install() {
   install_oh_my_zsh
   install_tfenv
   install_brew
+  install_from_asdf rust 1.64.0
   install_from_asdf golang 1.19
   install_from_asdf aws-vault 6.5.0
   install_from_asdf awscli 2.7.32
