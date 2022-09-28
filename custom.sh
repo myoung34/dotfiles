@@ -26,5 +26,8 @@ alias k="kubectl"
 
 alias rlp="source ~/.custom.sh"
 
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+[[ -d /home/linuxbrew/.linuxbrew/bin/brew ]] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 # custom exports such as API keys
 [[ -f $HOME/.exports ]] && . $HOME/.exports

@@ -47,9 +47,19 @@ function install_tfenv() {
   [[ ! -d "${TFENV_ROOT}" ]] && git clone https://github.com/kamatama41/tfenv.git ${TFENV_ROOT}
 }
 
+function install_brew() {
+ [[ ! -d /home/linuxbrew/.linuxbrew/bin/brew ]] && /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+}
+
 function install_asdf() {
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.2
   . ~/.asdf/asdf.sh
+}
+
+function install_from_brew() {
+  plugin="$1"
+  version="$2"
+  brew install "${plugin}" "${version}"
 }
 
 function install_from_asdf() {
@@ -160,11 +170,11 @@ function install() {
   [[ -x $(command -v apt-get) ]] && PREFIX="sudo apt-get install -y "
   [[ -x $(command -v pacman) ]] && PREFIX="sudo pacman -Syu "
   export PREFIX
-  $PREFIX curl vim git build-essential zlib1g-dev unzip libffi-dev libssl-dev
+  $PREFIX curl vim git build-essential zlib1g-dev unzip libffi-dev libssl-dev libbz2-dev ncurses-dev libreadline-dev tk-dev lzma-dev tree ripgrep vim
   install_configuration
   install_asdf
   install_from_asdf python 3.7.2
-  install_from_asdf ruby 2.4.0
+  install_from_asdf ruby 3.1.0
   install_from_asdf vault 0.11.5
   install_enhancd
   install_powerline
@@ -172,6 +182,7 @@ function install() {
   install_tmux
   install_oh_my_zsh
   install_tfenv
+  install_brew
   install_from_asdf golang 1.19
   install_from_asdf aws-vault 6.5.0
   install_from_asdf awscli 2.7.32
@@ -180,6 +191,7 @@ function install() {
   install_from_asdf kustomize 4.5.7
   install_from_asdf k9s 0.26.3
   install_from_asdf kubectx 0.9.4
+  install_from_brew hadolint 2.10.0
 }
 
 ##
