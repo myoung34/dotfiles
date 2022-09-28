@@ -173,7 +173,7 @@ function install() {
   $PREFIX curl vim git build-essential zlib1g-dev unzip libffi-dev libssl-dev libbz2-dev ncurses-dev libreadline-dev tk-dev lzma-dev tree ripgrep vim
   install_configuration
   install_asdf
-  install_from_asdf python 3.7.2
+  install_from_asdf python 3.8.9
   install_from_asdf ruby 3.1.0
   install_from_asdf vault 0.11.5
   install_enhancd
