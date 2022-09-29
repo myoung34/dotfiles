@@ -193,6 +193,7 @@ function install() {
   install_from_asdf k9s 0.26.3
   install_from_asdf kubectx 0.9.4
   install_from_brew hadolint 2.10.0
+  install_from_brew minamijoyo/hcledit/hcledit
 }
 
 ##
