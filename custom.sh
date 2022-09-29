@@ -23,11 +23,12 @@ ack() {
 }
 
 alias k="kubectl"
+export PATH="$HOME/.krew/bin:$PATH"
 
 alias rlp="source ~/.custom.sh"
 
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-[[ -d "/home/linuxbrew" ]] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+[[ -d "/home/linuxbrew" ]] && ( eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" )
 [[ $(asdf which rustc) ]] && sh $(dirname `asdf which rustc`)/../env
 
 

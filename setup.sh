@@ -51,6 +51,20 @@ function install_brew() {
  [[ ! -d /home/linuxbrew/.linuxbrew/bin/brew ]] && /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 }
 
+function install_krew() {
+  (
+    set -x; cd "$(mktemp -d)" &&
+    OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+    ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+    KREW="krew-${OS}_${ARCH}" &&
+    curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+    tar zxvf "${KREW}.tar.gz" &&
+    ./"${KREW}" install krew
+  )
+  export PATH="$HOME/.krew/bin:$PATH"
+  kubectl krew install deprecations
+}
+
 function install_asdf() {
   git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch master
   . ~/.asdf/asdf.sh
@@ -188,6 +202,7 @@ function install() {
   install_from_asdf aws-vault 6.5.0
   install_from_asdf awscli 2.7.32
   install_from_asdf kubectl 1.25.1
+  install_krew
   install_from_asdf helm 3.9.4
   install_from_asdf kustomize 4.5.7
   install_from_asdf k9s 0.26.3

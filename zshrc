@@ -101,3 +101,5 @@ source ~/.custom.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+export AWS_SDK_LOAD_CONFIG=true
