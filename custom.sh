@@ -28,8 +28,7 @@ alias rlp="source ~/.custom.sh"
 
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 [[ -d "/home/linuxbrew" ]] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-[[ -d "/home/myoung/.asdf/installs/rust/1.64.0/" ]] && source "/home/myoung/.asdf/installs/rust/1.64.0/env"
-[[ $(asdf which rust) ]] && sh $(dirname `asdf which rust`)/../env
+[[ $(asdf which rustc) ]] && sh $(dirname `asdf which rustc`)/../env
 
 
 # custom exports such as API keys

@@ -52,7 +52,7 @@ function install_brew() {
 }
 
 function install_asdf() {
-  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.2
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch master
   . ~/.asdf/asdf.sh
 }
 
@@ -192,6 +192,7 @@ function install() {
   install_from_asdf kustomize 4.5.7
   install_from_asdf k9s 0.26.3
   install_from_asdf kubectx 0.9.4
+  install_from_asdf viddy 0.3.6
   install_from_brew hadolint 2.10.0
   install_from_brew minamijoyo/hcledit/hcledit
 }
