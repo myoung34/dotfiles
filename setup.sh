@@ -208,6 +208,7 @@ function install() {
   install_from_asdf viddy 0.3.6
   install_from_brew hadolint
   install_from_brew minamijoyo/hcledit/hcledit
+  install_from_brew jless
 }
 
 ##
