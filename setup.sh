@@ -188,6 +188,7 @@ function install() {
   install_from_asdf python 3.8.9
   install_from_asdf ruby 3.1.0
   install_from_asdf vault 0.11.5
+  install_from_asdf nomad 1.3.8
   install_enhancd
   install_powerline
   install_neobundle
