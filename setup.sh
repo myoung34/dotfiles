@@ -207,6 +207,7 @@ function install() {
   install_from_asdf k9s 0.26.3
   install_from_asdf kubectx 0.9.4
   install_from_asdf viddy 0.3.6
+  install_from_asdf talos 1.3.2
   install_from_brew hadolint
   install_from_brew minamijoyo/hcledit/hcledit
   install_from_brew jless
