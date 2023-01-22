@@ -210,6 +210,9 @@ function install() {
   install_from_asdf talos 1.3.2
   install_from_asdf kubeconform 0.5.0
   install_from_asdf kubent 0.7.0
+  install_from_asdf age 1.1.1
+  install_from_brew age-plugin-yubikey
+  install_from_brew kubeseal # https://github.com/stefansedich/asdf-kubeseal/issues/6
   install_from_brew hadolint
   install_from_brew minamijoyo/hcledit/hcledit
   install_from_brew jless

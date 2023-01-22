@@ -54,3 +54,8 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 eval $(ssh-agent -s) >/dev/null 2>&1
 ssh-add >/dev/null 2>&1
 ssh-add ~/.ssh/gh_reddit >/dev/null 2>&1 #for github.snooguts
+
+function phage() {
+  [[ ! -d $HOME/.age ]] && mkdir $HOME/.age
+  [[ ! -f $HOME/.age/key ]] && age-plugin-yubikey -l --serial 11087061 --slot 1 | grep -v '^#' >$HOME/.age/key
+}
