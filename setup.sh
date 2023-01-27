@@ -211,6 +211,7 @@ function install() {
   install_from_asdf kubeconform 0.5.0
   install_from_asdf kubent 0.7.0
   install_from_asdf age 1.1.1
+  install_from_asdf sops 3.7.3
   install_from_brew age-plugin-yubikey
   install_from_brew kubeseal # https://github.com/stefansedich/asdf-kubeseal/issues/6
   install_from_brew hadolint
