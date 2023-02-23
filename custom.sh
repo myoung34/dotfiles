@@ -1,3 +1,5 @@
+[[ -n $SKIP_TMUX ]] && exit 0
+
 export PATH=/usr/local/bin:$PATH
 
 export "TERM=xterm-256color"
@@ -59,3 +61,5 @@ function phage() {
   [[ ! -d $HOME/.age ]] && mkdir $HOME/.age
   [[ ! -f $HOME/.age/key ]] && age-plugin-yubikey -l --serial 11087061 --slot 1 | grep -v '^#' >$HOME/.age/key
 }
+
+[[ $(uname -r) == *"microsoft"* ]] && export BROWSER="powershell.exe /C start"
