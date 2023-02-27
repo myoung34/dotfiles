@@ -217,6 +217,8 @@ function install() {
   install_from_brew hadolint
   install_from_brew minamijoyo/hcledit/hcledit
   install_from_brew jless
+  install_from_brew disneystreaming/tap/ssm-helpers
+
 }
 
 ##
