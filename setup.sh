@@ -208,7 +208,7 @@ function install() {
   install_from_asdf kubectx 0.9.4
   install_from_asdf viddy 0.3.6
   install_from_asdf talos 1.3.2
-  install_from_asdf kubeconform 0.5.0
+  install_from_asdf kubeconform 0.6.2
   install_from_asdf kubent 0.7.0
   install_from_asdf age 1.1.1
   install_from_asdf sops 3.7.3
