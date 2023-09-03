@@ -219,6 +219,7 @@ function install() {
   install_from_brew jless
   install_from_brew disneystreaming/tap/ssm-helpers
   install_from_asdf jless 0.9.0
+  install_from_asdf pre-commit 3.4.0
 
 }
 
