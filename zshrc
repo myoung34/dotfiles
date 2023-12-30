@@ -70,8 +70,8 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux)
 ZSH_TMUX_AUTOSTART=true
+plugins=(git tmux)
 
 source $ZSH/oh-my-zsh.sh
 source ~/.custom.sh
@@ -101,5 +101,3 @@ source ~/.custom.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-export AWS_SDK_LOAD_CONFIG=true

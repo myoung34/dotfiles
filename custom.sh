@@ -82,3 +82,4 @@ function funs() {
 }
 
 [[ $(uname -r) == *"microsoft"* ]] && export BROWSER="powershell.exe /C start"
+[[ $(uname -r) == *"microsoft"* ]] && cd ~
