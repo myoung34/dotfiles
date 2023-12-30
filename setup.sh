@@ -183,7 +183,7 @@ function install() {
   [[ -x $(command -v apt-get) ]] && PREFIX="sudo apt-get install -y "
   [[ -x $(command -v pacman) ]] && PREFIX="sudo pacman -Syu "
   export PREFIX
-  $PREFIX curl python3-pip vim git build-essential zlib1g-dev unzip libffi-dev libssl-dev libbz2-dev ncurses-dev libreadline-dev tk-dev lzma-dev tree ripgrep vim
+  $PREFIX curl python3-pip vim git build-essential zlib1g-dev unzip libffi-dev libssl-dev libbz2-dev ncurses-dev libreadline-dev tk-dev lzma-dev tree ripgrep vim zsh
   install_configuration
   install_asdf
   install_from_asdf python 3.8.9
