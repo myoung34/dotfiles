@@ -83,3 +83,5 @@ function funs() {
 
 [[ $(uname -r) == *"microsoft"* ]] && export BROWSER="powershell.exe /C start"
 [[ $(uname -r) == *"microsoft"* ]] && cd ~
+
+export AWS_VAULT_BACKEND=file
