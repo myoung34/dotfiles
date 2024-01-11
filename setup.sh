@@ -3,7 +3,7 @@
 ##
 # Configuration
 ##
-CONFIG_FILES=( custom.sh gitaliases gitconfig gitignore_default vimrc tmux.conf )
+CONFIG_FILES=( custom.sh gitaliases gitconfig gitignore_default vimrc tmux.conf zshrc)
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 OPERATION=0
 SOURCE_DIR="$HOME/Source"
@@ -38,8 +38,6 @@ function install_brew() {
 
 function install_oh_my_zsh() {
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  rm ~/.zshrc
-  ln -s ${DIR}/zshrc ~/.zshrc
 }
 
 function install_tfenv() {
