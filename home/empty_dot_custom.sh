@@ -5,9 +5,14 @@ export EDITOR=vim
 alias pbcopy="xclip -sel clip"
 alias rlp="source ~/.custom.sh"
 
+# Handle setting up tmux TPM and powerline for the first time if needed
 ( mkdir -p "$HOME/.tmux/plugins/tpm" || : ) >/dev/null 2>&1
 [[ ! -d "$HOME/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 [[ ! -d "$HOME/.tmux_powerline" ]] && git clone https://github.com/erikw/tmux-powerline.git ~/.tmux_powerline
+
+# Handle setting up vim NeoBundle away from nix
+( mkdir -p $HOME/.vim/bundle || : ) >/dev/null 2>&1
+[[ ! -d "$HOME/.vim/bundle/neobundle.vim" ]] && git clone https://github.com/Shougo/neobundle.vim $HOME/.vim/bundle/neobundle.vim
 
 stty werase undef
 
