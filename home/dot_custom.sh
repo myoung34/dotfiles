@@ -2,6 +2,7 @@ export AWS_VAULT_BACKEND=file
 export AWS_CONFIG_FILE=/run/agenix/aws
 export EDITOR=vim
 export PATH=$HOME/.local/share/mise/shims:$PATH
+export TENV_AUTO_INSTALL=true
 
 alias pbcopy="xclip -sel clip"
 alias rlp="source ~/.custom.sh"
