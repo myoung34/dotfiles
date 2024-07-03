@@ -1,3 +1,3 @@
 Host github.com
   User myoung34
-  IdentityFile ~/.ssh/github
+  IdentityFile /run/agenix/github
