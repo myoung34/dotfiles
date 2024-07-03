@@ -1,1 +1,2 @@
-# This is managed by nixos, dont modify this file
+cd ~
+source ~/.custom.sh
