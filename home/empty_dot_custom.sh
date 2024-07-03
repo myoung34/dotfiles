@@ -1,12 +1,15 @@
 export AWS_VAULT_BACKEND=file
 export AWS_CONFIG_FILE=/run/agenix/aws
 export EDITOR=vim
-export "TERM=xterm-256color"
-stty werase undef
-
 
 alias pbcopy="xclip -sel clip"
 alias rlp="source ~/.custom.sh"
+
+( mkdir -p "$HOME/.tmux/plugins/tpm" || : ) >/dev/null 2>&1
+[[ ! -d "$HOME/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+[[ ! -d "$HOME/.tmux_powerline" ]] && git clone https://github.com/erikw/tmux-powerline.git ~/.tmux_powerline
+
+stty werase undef
 
 function kubepug() {
   kustomize build --enable-helm >temp.yaml
