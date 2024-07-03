@@ -1,9 +1,14 @@
 export AWS_VAULT_BACKEND=file
 export AWS_CONFIG_FILE=/run/agenix/aws
 export EDITOR=vim
+export PATH=$HOME/.local/share/mise/shims:$PATH
 
 alias pbcopy="xclip -sel clip"
 alias rlp="source ~/.custom.sh"
+alias k=$(mise which /home/myoung/.local/share/mise/installs/kubectl/latest/bin/kubectl)
+
+# Direnv setup
+( mise which direnv >/dev/null 2>&1 ) && eval "$(direnv hook zsh)" || :
 
 # Handle setting up tmux TPM and powerline for the first time if needed
 ( mkdir -p "$HOME/.tmux/plugins/tpm" || : ) >/dev/null 2>&1
