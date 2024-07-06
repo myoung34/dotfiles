@@ -1,0 +1,7 @@
+Host github.com
+  User myoung34
+{{ if eq .chezmoi.osRelease.name "NixOS" }}
+  IdentityFile /run/agenix/github
+{{ else }}
+  IdentityFile ~/.ssh/github
+{{ end }}
