@@ -7,8 +7,12 @@ vim.g["test#python#pytest#file_pattern"] = [[test_.+\.py$]]
 
 return {
   {
+    "vim-test/vim-test",
+  },
+  {
     "nvim-neotest/neotest",
     dependencies = {
+      "nvim-neotest/neotest-go",
       "nvim-neotest/nvim-nio",
       "nvim-lua/plenary.nvim",
       "antoinemadec/FixCursorHold.nvim",
@@ -21,15 +25,11 @@ return {
             dap = { justMyCode = false },
             pytest_discover_instances = true,
           }),
+          require("neotest-go")({
+            recursive_run = true,
+          }),
         },
       })
     end,
-    --keys = {
-    --  { "<leader>a", "<cmd>echo \"foo\"<cr>", desc = "+testing" },
-    --  { "<leader>t", desc = "+testing" },
-    --  { "<leader>to", "<cmd>lua require(\"neotest\").output_panel.open()<cr>", desc = "Show test output" },
-    --  { "<leader>tc", "<cmd>lua require(\"neotest\").output_panel.close()<cr>", desc = "Close test output" },
-    --  { "<leader>tr", "<cmd>lua require(\"neotest\").run.run(vim.fn.expand(\"%\"))<cr><cmd>lua require(\"neotest\").output_panel.open()<cr>", desc = "Run tests" },
-    --},
   },
 }
