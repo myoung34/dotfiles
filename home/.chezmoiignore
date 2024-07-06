@@ -1,0 +1,3 @@
+{{ if not .threedprinter }}
+.config/Prusa*
+{{- end }}
