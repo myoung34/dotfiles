@@ -1,0 +1,57 @@
+[".tmux/plugins/tpm"]
+    type = "archive"
+    url = "https://github.com/tmux-plugins/tpm/archive/master.tar.gz"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
+[".tmux/plugins/tmux-colors-solarized"]
+    type = "archive"
+    url = "https://github.com/seebi/tmux-colors-solarized/archive/master.tar.gz"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
+[".tmux/plugins/tmux-continuum"]
+     type = "archive"
+     url = "https://github.com/tmux-plugins/tmux-continuum/archive/master.tar.gz"
+     exact = true
+     stripComponents = 1
+     refreshPeriod = "168h"
+[".tmux/plugins/tmux-copycat"]
+     type = "archive"
+     url = "https://github.com/tmux-plugins/tmux-copycat/archive/master.tar.gz"
+     exact = true
+     stripComponents = 1
+     refreshPeriod = "168h"
+[".tmux/plugins/tmux-resurrect"]
+     type = "archive"
+     url = "https://github.com/tmux-plugins/tmux-resurrect/archive/master.tar.gz"
+     exact = true
+     stripComponents = 1
+     refreshPeriod = "168h"
+[".tmux/plugins/tmux-sensible"]
+     type = "archive"
+     url = "https://github.com/tmux-plugins/tmux-sensible/archive/master.tar.gz"
+     exact = true
+     stripComponents = 1
+     refreshPeriod = "168h"
+[".tmux/plugins/tmux-yank"]
+     type = "archive"
+     url = "https://github.com/tmux-plugins/tmux-yank/archive/master.tar.gz"
+     exact = true
+     stripComponents = 1
+     refreshPeriod = "168h"
+
+[".tmux_powerline"]
+    type = "archive"
+    url = "https://github.com/erikw/tmux-powerline/archive/master.tar.gz"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
+[".vim/bundle/neobundle.vim"]
+    type = "archive"
+    url = "https://github.com/Shougo/neobundle.vim/archive/master.tar.gz"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
+
+

@@ -4,21 +4,15 @@ export EDITOR=vim
 export PATH=$HOME/.local/share/mise/shims:$PATH
 export TENV_AUTO_INSTALL=true
 
+# powerline-go if available for PS1
+( mise which powerline-go >/dev/null 2>&1 ) && PS1="$(`mise which powerline-go` -error $? -jobs ${${(%):%j}:-0})" || :
+
 alias pbcopy="xclip -sel clip"
 alias rlp="source ~/.custom.sh"
-alias k=$(mise which /home/myoung/.local/share/mise/installs/kubectl/latest/bin/kubectl)
+( mise which kubectl >/dev/null 2>&1 ) && alias k=$(mise which kubectl)
 
 # Direnv setup
 ( mise which direnv >/dev/null 2>&1 ) && eval "$(direnv hook zsh)" || :
-
-# Handle setting up tmux TPM and powerline for the first time if needed
-( mkdir -p "$HOME/.tmux/plugins/tpm" || : ) >/dev/null 2>&1
-[[ ! -d "$HOME/.tmux/plugins/tpm" ]] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-[[ ! -d "$HOME/.tmux_powerline" ]] && git clone https://github.com/erikw/tmux-powerline.git ~/.tmux_powerline
-
-# Handle setting up vim NeoBundle away from nix
-( mkdir -p $HOME/.vim/bundle || : ) >/dev/null 2>&1
-[[ ! -d "$HOME/.vim/bundle/neobundle.vim" ]] && git clone https://github.com/Shougo/neobundle.vim $HOME/.vim/bundle/neobundle.vim
 
 stty werase undef
 
@@ -34,12 +28,6 @@ function kubepug() {
   --cluster=false \
   --target-version="$1"
   rm temp.yaml
-}
-
-
-function upsearch () {
-  found=$(test / == "$PWD" && return || test -e "$1" && echo "$PWD" && return || cd .. && upsearch "$1")
-  echo $found
 }
 
 
@@ -89,5 +77,4 @@ function funs() {
   curl -k -H "Content-Type: application/json" -X PUT --data-binary @temp.json 127.0.0.1:8001/api/v1/namespaces/$NAMESPACE/finalize
 }
 
-[[ $(uname -r) == *"microsoft"* ]] && export BROWSER="powershell.exe /C start"
 [[ $(uname -r) == *"microsoft"* ]] && cd ~
