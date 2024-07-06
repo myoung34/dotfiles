@@ -1,0 +1,6 @@
+{{- $email := promptStringOnce . "email" "Email address" -}}
+
+[data]
+work = {{ promptBool "work" }}
+desktop = {{ promptBool "desktop" }}
+email = {{ $email | quote }}
