@@ -10,7 +10,9 @@ kubectl = "latest"
 kubectx = "latest"
 kubent = "latest"
 kustomize = "latest"
+{{ if ne .chezmoi.osRelease.name "NixOS" }}
 nomad = "latest"
+{{ end }}
 powerline-go = "latest"
 pre-commit = "latest"
 talosctl = "1.6.7"
