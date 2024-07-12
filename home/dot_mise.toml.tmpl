@@ -1,5 +1,8 @@
 [tools]
+{{ if ne .chezmoi.osRelease.name "NixOS" }}
 awscli = "latest"
+nomad = "latest"
+{{ end }}
 aws-vault = "latest"
 direnv = "latest"
 fzf = "latest"
@@ -10,12 +13,9 @@ kubectl = "latest"
 kubectx = "latest"
 kubent = "latest"
 kustomize = "latest"
-{{ if ne .chezmoi.osRelease.name "NixOS" }}
-nomad = "latest"
-{{ end }}
 powerline-go = "latest"
 pre-commit = "latest"
-talosctl = "1.6.7"
+talosctl = "1.7.5"
 vault = "latest"
 viddy = "latest"
 yq = "latest"
