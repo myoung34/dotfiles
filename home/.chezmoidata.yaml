@@ -1,0 +1,33 @@
+packages:
+  linux:
+    - name: build-essential
+    - name: age
+    - name: unzip
+    - name: git
+    - name: fzf
+    - name: neovim
+    - name: ripgrep
+    - name: tmux
+    - name: wget
+    - name: zsh
+    - name: jq
+  darwin:
+    brews:
+    - 'git'
+    - 'fzf'
+    - 'neovim'
+    - 'ripgrep'
+    - 'tailscale'
+    - 'tfenv'
+    - 'tmux'
+    - 'wget'
+    - 'xclip'
+    - 'xz'
+    - 'colima'
+    casks:
+    - 'font-hack-nerd-font'
+    - 'signal'
+    - 'vlc'
+    - 'rectangle'
+    - 'spotify'
+    - 'keybase'

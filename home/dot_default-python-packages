@@ -1,0 +1,6 @@
+poetry
+tox
+mypy
+isort
+py.test
+pylint

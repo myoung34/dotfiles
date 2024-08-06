@@ -24,3 +24,9 @@
 [user]
   email = {{ .chezmoi.config.data.email }}
   name = Marcus Young
+{{ if .work -}}
+[include]
+    path = ~/.work_gitconfig
+[url "git@github.com:{{ .chezmoi.config.data.work_name | lower }}"]
+  insteadof = https://github.com/{{ .chezmoi.config.data.work_name | lower }}
+{{- end }}

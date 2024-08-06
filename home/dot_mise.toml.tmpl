@@ -1,12 +1,18 @@
 [tools]
-{{ if ne .chezmoi.osRelease.name "NixOS" }}
 awscli = "latest"
+rust = "latest"
+golang = "latest"
+nodejs = "latest"
 nomad = "latest"
+python = "latest"
+{{ if eq .chezmoi.os "darwin" }}
+"ubi:FiloSottile/age" = "latest"
+age-plugin-yubikey = "latest"
 {{ end }}
 aws-vault = "latest"
 direnv = "latest"
-fzf = "latest"
 helm = "latest"
+gcloud = "latest"
 k9s = "latest"
 kubeconform = "latest"
 kubectl = "latest"
@@ -19,3 +25,4 @@ talosctl = "1.7.5"
 vault = "latest"
 viddy = "latest"
 yq = "latest"
+

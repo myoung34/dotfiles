@@ -1,0 +1,53 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env python3
+# vim:ft=python
+# .chezmoidata.yaml hash: {{ include ".chezmoidata.yaml" | sha256sum }}
+
+import json
+import subprocess
+
+
+def matches_features(package, features):
+    package_features = package.get("features")
+    if package_features:
+        for name, enabled in features.items():
+            if enabled and name in package_features:
+                return True
+        return False
+    else:
+        # no features means it should always be installed
+        return True
+
+
+def install_packages(package_names):
+    print("Packages that will be installed:")
+    print("\n".join(package_names))
+    command = [
+        "sudo",
+        "apt-get",
+        "install",
+        "-y",
+    ]
+    command.extend(package_names)
+    subprocess.run(command)
+
+
+def get_config():
+    result = subprocess.run(["chezmoi", "data"], capture_output=True)
+    data = json.loads(result.stdout)
+    return data["chezmoi"]["config"]["data"]
+
+
+def get_packages():
+    result = subprocess.run(["chezmoi", "data"], capture_output=True)
+    data = json.loads(result.stdout)
+    return data["packages"]["linux"]
+
+
+def main():
+    packages = get_packages()
+    install_packages(list(map(lambda p: p["name"], packages)))
+
+if __name__ == "__main__":
+    main()
+{{ end -}}

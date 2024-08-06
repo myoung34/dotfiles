@@ -1,15 +1,21 @@
 export AWS_VAULT_BACKEND=file
+{{- if ne .chezmoi.os "darwin" }}
 export AWS_CONFIG_FILE=/run/agenix/aws
+{{- end }}
 export EDITOR=vim
 export PATH=$HOME/.local/share/mise/shims:$PATH
 export TENV_AUTO_INSTALL=true
+[[ -f ~/.exports.sh ]] && source ~/.exports.sh || :
 
 # powerline-go if available for PS1
 ( mise which powerline-go >/dev/null 2>&1 ) && PS1="$(`mise which powerline-go` -error $? -jobs ${${(%):%j}:-0})" || :
 
+{{ if ne .chezmoi.os "darwin" }}
 alias pbcopy="xclip -sel clip"
+{{ end }}
 alias rlp="source ~/.custom.sh"
 ( mise which kubectl >/dev/null 2>&1 ) && alias k=$(mise which kubectl)
+(command -v colima >/dev/null 2>&1) && alias docker="colima nerdctl --"
 
 # Direnv setup
 ( mise which direnv >/dev/null 2>&1 ) && eval "$(direnv hook zsh)" || :
@@ -75,6 +81,10 @@ function funs() {
   kubectl proxy &
   kubectl get namespace $NAMESPACE -o json |jq '.spec = {"finalizers":[]}' >temp.json
   curl -k -H "Content-Type: application/json" -X PUT --data-binary @temp.json 127.0.0.1:8001/api/v1/namespaces/$NAMESPACE/finalize
+}
+
+function fix_wsl() {
+  sudo mount -t drvfs -o "ro,umask=222" "C:\Program Files\usbipd-win\WSL" "/var/run/usbipd-win"
 }
 
 [[ $(uname -r) == *"microsoft"* ]] && cd ~

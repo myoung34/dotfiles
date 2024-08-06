@@ -1,7 +1,17 @@
 {{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $work_email := promptStringOnce . "work_email" "Work Email address (Leave empty if not a work machine)" -}}
+{{- $work_name := promptStringOnce . "work_name" "Work Company Name (Leave empty if not a work machine)" -}}
 
 [data]
 work = {{ promptBoolOnce . "work" "Is this a work machine?" }}
 desktop = {{ promptBoolOnce . "desktop" "Is this a desktop as opposed to a laptop?" }}
+nixos = {{ promptBoolOnce . "nixos" "Is this nix OS?" }}
 threedprinter = {{ promptBoolOnce . "threedprinter" "Is this going to do 3d Printer stuff?" }}
 email = {{ $email | quote }}
+work_email = {{ $work_email | quote }}
+work_name = {{ $work_name | quote }}
+
+encryption = "age"
+[age]
+  identity = "~/.age/identity"
+  recipient = "age1yubikey1qgsrfvrwclnf87rne39ye7kn7zhy5p8r08ez7ha9tgfncp5s7ukekv8qv7p"

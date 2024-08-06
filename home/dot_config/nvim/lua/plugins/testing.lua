@@ -24,6 +24,7 @@ return {
           require("neotest-python")({
             dap = { justMyCode = false },
             pytest_discover_instances = true,
+            runner = "pytest",
           }),
           require("neotest-go")({
             recursive_run = true,

@@ -1,0 +1,5 @@
+{{ if .work -}}
+[user]
+  name = Mark Young
+  email = {{ .chezmoi.config.data.work_email }}
+{{- end }}
