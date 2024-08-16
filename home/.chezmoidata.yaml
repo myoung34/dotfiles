@@ -11,6 +11,8 @@ packages:
     - name: wget
     - name: zsh
     - name: jq
+    - name: screen
+    - name: dnsutils
   darwin:
     brews:
     - 'git'
