@@ -28,6 +28,8 @@ packages:
     - 'colima'
     casks:
     - 'font-hack-nerd-font'
+    - 'balenaetcher'
+    - 'thonny'
     - 'signal'
     - 'vlc'
     - 'rectangle'
