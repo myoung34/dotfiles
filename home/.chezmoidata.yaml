@@ -13,6 +13,7 @@ packages:
     - name: jq
     - name: screen
     - name: dnsutils
+    - name: tree
   darwin:
     brews:
     - 'git'
@@ -26,6 +27,7 @@ packages:
     - 'xclip'
     - 'xz'
     - 'colima'
+    - 'tree'
     casks:
     - 'font-hack-nerd-font'
     - 'balenaetcher'
