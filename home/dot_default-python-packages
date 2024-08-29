@@ -2,5 +2,5 @@ poetry
 tox
 mypy
 isort
-py.test
+pytest
 pylint
