@@ -2,6 +2,7 @@ packages:
   linux:
     - name: build-essential
     - name: age
+    - name: pcscd
     - name: unzip
     - name: git
     - name: fzf

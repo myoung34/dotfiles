@@ -5,6 +5,9 @@ golang = "latest"
 nodejs = "latest"
 nomad = "latest"
 python = "latest"
+{{ if eq .chezmoi.os "linux" }}
+"ubi:str4d/age-plugin-yubikey" = "latest"
+{{ end }}
 {{ if eq .chezmoi.os "darwin" }}
 "ubi:FiloSottile/age" = "latest"
 age-plugin-yubikey = "latest"
