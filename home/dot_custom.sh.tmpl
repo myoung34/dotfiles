@@ -3,6 +3,7 @@ export EDITOR=vim
 export PATH=$HOME/.local/share/mise/shims:$PATH
 export TENV_AUTO_INSTALL=true
 [[ -f ~/.exports.sh ]] && source ~/.exports.sh || :
+[[ -d ~/.tfenv ]] && export PATH=$HOME/.tfenv/bin:$PATH
 
 # powerline-go if available for PS1
 ( mise which powerline-go >/dev/null 2>&1 ) && PS1="$(`mise which powerline-go` -error $? -jobs ${${(%):%j}:-0})" || :
