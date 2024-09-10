@@ -1,0 +1,2 @@
+[tools]
+"ubi:https://github.com/goss-org/goss/releases/download/v0.4.8/dgoss" = "latest"

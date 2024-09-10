@@ -15,6 +15,7 @@ packages:
     - name: screen
     - name: dnsutils
     - name: tree
+    - name: zlib1g-dev
   darwin:
     brews:
     - 'git'

@@ -1,7 +1,4 @@
 export AWS_VAULT_BACKEND=file
-{{- if ne .chezmoi.os "darwin" }}
-export AWS_CONFIG_FILE=/run/agenix/aws
-{{- end }}
 export EDITOR=vim
 export PATH=$HOME/.local/share/mise/shims:$PATH
 export TENV_AUTO_INSTALL=true
