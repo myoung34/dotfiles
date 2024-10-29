@@ -5,7 +5,6 @@
 [data]
 work = {{ promptBoolOnce . "work" "Is this a work machine?" }}
 desktop = {{ promptBoolOnce . "desktop" "Is this a desktop as opposed to a laptop?" }}
-nixos = {{ promptBoolOnce . "nixos" "Is this nix OS?" }}
 threedprinter = {{ promptBoolOnce . "threedprinter" "Is this going to do 3d Printer stuff?" }}
 email = {{ $email | quote }}
 work_email = {{ $work_email | quote }}
