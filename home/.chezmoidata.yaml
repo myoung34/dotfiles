@@ -30,7 +30,6 @@ packages:
     - 'xz'
     - 'colima'
     - 'tree'
-    - 'peak/tap/s5cmd'
     - 'carlocab/personal/unrar'
     casks:
     - 'font-hack-nerd-font'
