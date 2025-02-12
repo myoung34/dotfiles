@@ -15,6 +15,7 @@ packages:
     - name: screen
     - name: dnsutils
     - name: tree
+    - name: xq
     - name: zlib1g-dev
   darwin:
     brews:
@@ -27,6 +28,7 @@ packages:
     - 'tmux'
     - 'wget'
     - 'xclip'
+    - 'xq'
     - 'xz'
     - 'colima'
     - 'tree'

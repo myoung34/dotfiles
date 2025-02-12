@@ -6,6 +6,10 @@ Host i-*
       ProxyCommand sh -c "aws --region us-east-2 ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
 {{- end }}
 
+Host bignasty.king-gila.ts.net
+  User myoung
+  IdentityFile ~/.ssh/bignasty
+
 Host github.com
   User myoung34
   IdentityFile ~/.ssh/github
