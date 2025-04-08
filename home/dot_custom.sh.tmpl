@@ -13,12 +13,18 @@ alias pbcopy="xclip -sel clip"
 {{ end }}
 alias rlp="source ~/.custom.sh"
 ( mise which kubectl >/dev/null 2>&1 ) && alias k=$(mise which kubectl)
-(command -v colima >/dev/null 2>&1) && alias docker="colima nerdctl --"
+(command -v colima >/dev/null 2>&1) \
+  && alias docker="colima nerdctl --" \
+  && alias docker_restart="colima stop; colima start --network-address --runtime containerd"
 
 # Direnv setup
 ( mise which direnv >/dev/null 2>&1 ) && eval "$(direnv hook zsh)" || :
 
 stty werase undef
+
+function clean_replicasets() {
+  for ns in $(k get ns | awk '{print $1}'); do k -n ${ns} delete $(k -n ${ns} get all | grep replica | grep '0         0         0' | awk '{print $1}' | xargs echo); done
+}
 
 function kubepug() {
   kustomize build --enable-helm >temp.yaml

@@ -33,6 +33,7 @@ packages:
     - 'colima'
     - 'tree'
     - 'carlocab/personal/unrar'
+    - 'fastly/tap/fastly'
     casks:
     - 'font-hack-nerd-font'
     - 'balenaetcher'
