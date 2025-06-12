@@ -33,7 +33,7 @@ packages:
     - 'colima'
     - 'tree'
     - 'carlocab/personal/unrar'
-    - 'fastly/tap/fastly'
+    #- 'fastly/tap/fastly'
     casks:
     - 'font-hack-nerd-font'
     - 'balenaetcher'
@@ -44,3 +44,4 @@ packages:
     - 'spotify'
     - 'keybase'
     - 'obsidian'
+    - 'wireshark'
