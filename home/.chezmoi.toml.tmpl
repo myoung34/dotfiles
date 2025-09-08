@@ -3,7 +3,8 @@
 {{- $work_name := promptStringOnce . "work_name" "Work Company Name (Leave empty if not a work machine)" -}}
 
 [data]
-work = {{ promptBoolOnce . "work" "Is this a work machine?" }}
+workf = {{ promptBoolOnce . "workf" "Is this a work (f) machine?" }}
+workz = {{ promptBoolOnce . "workz" "Is this a work (z) machine?" }}
 desktop = {{ promptBoolOnce . "desktop" "Is this a desktop as opposed to a laptop?" }}
 threedprinter = {{ promptBoolOnce . "threedprinter" "Is this going to do 3d Printer stuff?" }}
 email = {{ $email | quote }}

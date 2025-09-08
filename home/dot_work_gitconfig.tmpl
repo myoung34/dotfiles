@@ -1,4 +1,9 @@
-{{ if .work -}}
+{{ if .workf -}}
+[user]
+  name = Mark Young
+  email = {{ .chezmoi.config.data.work_email }}
+{{- end }}
+{{ if .workz -}}
 [user]
   name = Mark Young
   email = {{ .chezmoi.config.data.work_email }}
