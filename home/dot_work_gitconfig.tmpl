@@ -2,9 +2,15 @@
 [user]
   name = Mark Young
   email = {{ .chezmoi.config.data.work_email }}
+  signingkey = BE13958D157CDC07
+
 {{- end }}
 {{ if .workz -}}
 [user]
   name = Mark Young
   email = {{ .chezmoi.config.data.work_email }}
+  signingkey = BE13958D157CDC07
+
+[commit]
+  gpgsign = true
 {{- end }}

@@ -24,14 +24,11 @@
 [user]
   email = {{ .chezmoi.config.data.email }}
   name = Mark Young
-{{ if .workf -}}
-[include]
+	signingkey = BE13958D157CDC07
+[includeIf "gitdir:~/work/zoom/"]
     path = ~/.work_gitconfig
-{{- end }}
-{{ if .workz -}}
-[include]
+[includeIf "gitdir:~/work/fastly/"]
     path = ~/.work_gitconfig
-{{- end }}
 {{ if .workf -}}
 [url "git@github.com:{{ .chezmoi.config.data.work_name | lower }}"]
   insteadof = https://github.com/{{ .chezmoi.config.data.work_name | lower }}

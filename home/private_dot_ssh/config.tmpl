@@ -2,14 +2,14 @@
 Include ~/.colima/ssh_config
 Include ~/.ssh/work
 
-Host i-* 
+Host i-*
       ProxyCommand sh -c "aws --region us-east-2 ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
 {{- end }}
 {{ if .workz -}}
 Include ~/.ssh/work
 {{- end }}
 
-Host bignasty*
+Host bignasty* 192.168.3.2
   User myoung
   IdentityFile ~/.ssh/bignasty
 

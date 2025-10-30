@@ -49,7 +49,7 @@ function phage() {
 
   age-plugin-yubikey -l | grep Serial >/dev/null 2>&1
   YUBIKEY_DETECTED=$?
-  if [[ ${YUBIKEY_DETECTED} -eq 0 ]]; then 
+  if [[ ${YUBIKEY_DETECTED} -eq 0 ]]; then
     echo "Detected yubikey"
     mkdir -p $HOME/.age || :
     [[ ! -f $HOME/.age/recipient ]] && age-plugin-yubikey -l --serial 11087061 --slot 1 | grep -v '^#' >$HOME/.age/recipient
@@ -57,7 +57,7 @@ function phage() {
     filename=$(basename -- "$1")
     extension="${filename##*.}"
 
-    if [[ ${extension} == "age" ]]; then 
+    if [[ ${extension} == "age" ]]; then
       filename="${filename%.*}"
       echo Decrypting ${filename}.age to ${filename}
       age -d -i ~/.age/identity -o ${filename} ${filename}.age
