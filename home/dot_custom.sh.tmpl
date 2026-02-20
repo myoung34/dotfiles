@@ -92,3 +92,15 @@ function fix_wsl() {
 }
 
 [[ $(uname -r) == *"microsoft"* ]] && cd ~
+
+### pdf note
+# $ docker run -it \
+#   -p 8080:8080 \
+#   -v "./pdf/trainingData:/usr/share/tessdata" \
+#   -v "./pdf/extraConfigs:/configs" \
+#   -v "./pdf/customFiles:/customFiles/" \
+#   -v "./pdf/logs:/logs/" \
+#   -v "./pdf/pipeline:/pipeline/" \
+#   -e DOCKER_ENABLE_SECURITY=false \
+#   -e LANGS=en_GB \
+#   docker.stirlingpdf.com/stirlingtools/stirling-pdf:latest
