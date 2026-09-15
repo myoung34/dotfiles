@@ -1,0 +1,140 @@
+#!/bin/bash
+
+# Read JSON input from stdin
+input=$(cat)
+
+# Extract information from JSON
+current_dir=$(echo "$input" | jq -r '.workspace.current_dir')
+output_style=$(echo "$input" | jq -r '.output_style.name')
+# model_name=$(echo "$input" | jq -r '.model.display_name')
+
+# Model name - extract friendly name from ARN or model ID
+model_id=$(echo "${input}" | jq -r '.model.id')
+if [[ "${model_id}" =~ (opus|sonnet|haiku)-([0-9]+)-?([0-9]+)? ]]; then
+    family="${BASH_REMATCH[1]^}"
+    major="${BASH_REMATCH[2]}"
+    minor="${BASH_REMATCH[3]}"
+    if [[ -n "${minor}" ]]; then
+        model_name="${family} ${major}.${minor}"
+    else
+        model_name="${family} ${major}"
+    fi
+else
+    model_name=$(echo "${input}" | jq -r '.model.display_name')
+fi
+
+# Effort level (absent when the model doesn't support it)
+effort_level=$(echo "${input}" | jq -r '.effort.level // empty')
+
+# Treat the built-in "default" output style as empty so it doesn't clutter the suffix.
+style_label=""
+if [[ "${output_style}" != "default" && -n "${output_style}" && "${output_style}" != "null" ]]; then
+    style_label="${output_style}"
+fi
+
+if [[ -n "${effort_level}" && -n "${style_label}" ]]; then
+    model_suffix="${effort_level} · ${style_label}"
+elif [[ -n "${effort_level}" ]]; then
+    model_suffix="${effort_level}"
+else
+    model_suffix="${style_label}"
+fi
+
+if [[ -n "${model_suffix}" ]]; then
+    model_display="${model_name} (${model_suffix})"
+else
+    model_display="${model_name}"
+fi
+
+# Get current directory basename
+dir_name=$(basename "$current_dir")
+
+# Get git information if in a git repo
+if git rev-parse --git-dir > /dev/null 2>&1; then
+    # Get branch name
+    branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+
+    # Get git status
+    git_status=""
+    if [[ -n $(git status --porcelain 2>/dev/null) ]]; then
+        git_status=" *"
+    fi
+
+    # Get commit hash (short)
+    commit_hash=$(git rev-parse --short HEAD 2>/dev/null)
+
+    # Get tag pointing at HEAD, truncated if longer than a standard v000.000.000 tag
+    git_tag=$(git tag --points-at HEAD 2>/dev/null | head -n 1)
+    tag_info=""
+    if [[ -n "$git_tag" ]]; then
+        if (( ${#git_tag} > 12 )); then
+            git_tag="${git_tag:0:12}…"
+        fi
+        tag_info=" "$''" $git_tag"
+    fi
+
+    git_info=" │ "$'\ue702'" $branch$git_status ($commit_hash)$tag_info"
+else
+    git_info=""
+fi
+
+# Get Go version if go.mod exists
+# Uses Nerd Fonts private-use Unicode glyphs (see: https://www.nerdfonts.com/cheat-sheet)
+if [[ -f "$current_dir/go.mod" ]]; then
+    go_version=$(go version 2>/dev/null | awk '{print $3}' | sed 's/go//')
+    lang_info=" │ "$'\ue65e'" $go_version"
+elif [[ -f "$current_dir/package.json" ]]; then
+    node_version=$(node --version 2>/dev/null | sed 's/v//')
+    lang_info=" │ "$'\ued0d'" $node_version"
+elif [[ -f "$current_dir/Cargo.toml" ]]; then
+    rust_version=$(rustc --version 2>/dev/null | awk '{print $2}')
+    lang_info=" │ "$'\ue7a8'" $rust_version"
+else
+    lang_info=""
+fi
+
+# Context usage with progress bar
+context_info=""
+usage=$(echo "${input}" | jq '.context_window.current_usage')
+if [[ "${usage}" != "null" ]]; then
+    current=$(echo "${usage}" | jq '.input_tokens + .cache_creation_input_tokens + .cache_read_input_tokens')
+    size=$(echo "${input}" | jq '.context_window.context_window_size')
+    pct=$((current * 100 / size))
+
+    filled=$((pct / 10))
+    empty=$((10 - filled))
+    filled_bar=""
+    empty_bar=""
+    for ((i=0; i<filled; i++)); do filled_bar+="█"; done
+    for ((i=0; i<empty; i++)); do empty_bar+="░"; done
+
+    if (( pct >= 70 )); then
+        color_start=$'\033[31m'  # red
+        color_end=$'\033[0m'
+    elif (( pct >= 50 )); then
+        color_start=$'\033[33m'  # yellow
+        color_end=$'\033[0m'
+    else
+        color_start=""
+        color_end=""
+    fi
+
+    context_info=" │ Context: ${color_start}[${filled_bar}${empty_bar}] ${pct}%${color_end}"
+fi
+
+# Session cost
+cost_info=""
+total_cost=$(echo "${input}" | jq -r '.cost.total_cost_usd // empty')
+if [[ -n "${total_cost}" ]]; then
+    cost_info=$(printf " │ \$%.2f" "${total_cost}")
+fi
+
+# Build the status line
+# Uses Nerd Fonts private-use Unicode glyphs (see: https://www.nerdfonts.com/cheat-sheet)
+printf "🤖 %s%s%s │ 📁 %s%s%s" \
+    "$model_display" \
+    "${context_info}" \
+    "${cost_info}" \
+    "$dir_name" \
+    "$git_info" \
+    "$lang_info"

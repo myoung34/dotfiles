@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+#
+# gen-rules.sh — generate Claude path-scoped rules from the canonical skills.
+#
+# The skill SKILL.md files in .agents/skills/ are the single source of truth for
+# convention content. Claude Code consumes the same content as path-scoped rules
+# under .claude/rules/, which need a different frontmatter (`paths:` globs)
+# instead of the skill's `name:`/`description:`. This script regenerates each
+# rule by stripping the skill frontmatter and prepending the rule frontmatter,
+# so the body stays byte-identical to the skill.
+#
+# Run via `make rules`. `make install` runs it automatically.
+
+set -euo pipefail
+
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+cd "$repo_root"
+
+# strip_frontmatter <file> — print the body after the leading YAML frontmatter
+# block (the content following the second `---` line, including the blank line).
+strip_frontmatter() {
+	awk 'f { print } /^---$/ { c++; if (c == 2) f = 1 }' "$1"
+}
+
+# gen <skill-path> <rule-path> <paths-glob>
+gen() {
+	local skill="$1" rule="$2" glob="$3"
+	{
+		printf -- '---\n'
+		printf -- 'paths:\n'
+		printf -- "  - '%s'\n" "$glob"
+		printf -- '---\n'
+		strip_frontmatter "$skill"
+	} >"$rule"
+	echo "generated $rule from $skill"
+}
+
+gen .agents/skills/conventions-go/SKILL.md       .claude/rules/go.md       '**/*.go'
+gen .agents/skills/conventions-markdown/SKILL.md .claude/rules/markdown.md '**/*.md'
+gen .agents/skills/conventions-python/SKILL.md   .claude/rules/python.md   '**/*.py'
+gen .agents/skills/conventions-sql/SKILL.md      .claude/rules/sql.md      '**/*.sql'
+
+# copy_siblings <skill-dir> <rule-dir> — copy non-SKILL.md files so relative
+# links in the generated rule resolve. Each copy gets a "generated" banner so a
+# reader (or agent) editing it knows the edit belongs in the source skill —
+# go.md/markdown.md already signal derivation via their `paths:` frontmatter.
+copy_siblings() {
+	local skill_dir="$1" rule_dir="$2" src base
+	while IFS= read -r src; do
+		base="$(basename "$src")"
+		{
+			printf -- '<!-- generated from %s — edit there, run `make rules` -->\n\n' "$src"
+			cat "$src"
+		} >"$rule_dir/$base"
+		echo "generated $rule_dir/$base from $src"
+	done < <(find "$skill_dir" -maxdepth 1 -name '*.md' ! -name 'SKILL.md')
+}
+
+copy_siblings .agents/skills/conventions-go       .claude/rules
+copy_siblings .agents/skills/conventions-markdown  .claude/rules
+copy_siblings .agents/skills/conventions-python    .claude/rules
+copy_siblings .agents/skills/conventions-sql       .claude/rules

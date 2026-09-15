@@ -1,0 +1,128 @@
+---
+name: draft-pr
+description: Draft a concise, direct pull request with a clear Problem and Solution. Use when the user asks to create, draft, or open a PR.
+allowed-tools: Bash(git diff:*), Bash(git log:*), Bash(git status:*), Bash(git branch:*), Bash(git symbolic-ref:*), Bash(git rev-parse:*), Bash(git merge-base:*), Bash(git push:*), Bash(gh pr create:*), Bash(gh pr view:*), Bash(gh repo view:*), Bash(gh stack:*)
+---
+
+# Draft PR
+
+Open a pull request whose description is direct and concise, structured around a
+clear **Problem** and **Solution**.
+
+## Context
+
+If the fields below show commands rather than output, run each one first.
+
+- Branch: !`git branch --show-current 2>/dev/null || echo "(not a git repo)"`
+- Default branch: !`git symbolic-ref --short refs/remotes/origin/HEAD 2>/dev/null || echo "(unknown — detect in step 2)"`
+- Status: !`git status --short 2>/dev/null`
+- Recent commits: !`git log --oneline -15 2>/dev/null`
+- Existing PR: !`gh pr view --json url,state,isDraft 2>/dev/null || echo "(none)"`
+
+## Process
+
+1. **Check for a stack.** Read the active plan or task document, then run
+   `gh stack view --json`. If the document declares `Stack` or the command
+   finds an active stack, invoke [`stacked-prs`](../stacked-prs/SKILL.md) and
+   stop. `gh stack submit` creates or updates the complete PR chain and its
+   base branches.
+
+1. **Check preconditions.**
+
+   - Not a git repo, or branch is the base branch itself → stop and say so. A PR
+     needs a feature branch distinct from base.
+   - If an open PR already exists for this branch, stop and ask whether to
+     update its description instead of opening a new one.
+
+1. **Determine the base branch.** Use the default branch from Context. If
+   unknown, run `git symbolic-ref --short refs/remotes/origin/HEAD`, falling
+   back to `main`, then `master`. Confirm with the user if still ambiguous (e.g.
+   the branch was cut from something else).
+
+1. **Read the full branch diff** against the base:
+
+   ```bash
+   base=$(git merge-base HEAD origin/<base>)
+   git log --oneline "$base"..HEAD   # commits + intent
+   git diff "$base"...HEAD           # actual hunks
+   ```
+
+   Don't rely on diffstat alone; Problem/Solution must reflect the actual hunks.
+   Read commit messages for intent the diff doesn't reveal.
+
+1. **Write the description** using the Template.
+
+   - **Problem:** what was wrong or missing and why it matters — the observable
+     symptom or gap, not the implementation. Reference the linked issue/ticket
+     if any.
+   - **Solution:** what the change does to fix the Problem, verifiable against
+     the diff. Lead with the key change; note notable trade-offs or rejected
+     alternatives.
+   - Keep both tight — one short paragraph or a few bullets each. Cut filler
+     ("this PR", "simply", "just"). Active voice.
+   - Add `## Notes` only for testing done, a migration step, a risk, or a
+     follow-up worth flagging. Omit otherwise.
+
+1. **Draft the title:**
+   - **Title = consequence/why, NOT diff mechanics.** A reviewer reading only
+     the title should learn what improves without opening the PR.
+     - *Reject mechanical summaries:* `update X to Y`, `add helper Z`,
+       `refactor auth module`.
+     - *Require consequence:* `retry transient 502s so nightly import completes`,
+       `adopt X for faster completion`.
+   - Keep imperative mood, concise, no trailing period.
+   - Follow `~/.gitcommit` conventions (type prefix/scope) if that file exists;
+     a squash merge turns this title into the commit subject.
+
+   ```txt
+   BAD:  fix(fetch): add retry wrapper to the fetch helper
+   GOOD: fix(fetch): retry transient 502s so the nightly import completes
+   ```
+
+1. **Show the title and description to the user and wait for approval.** Do not
+   open the PR before then.
+
+1. **Push if needed,** then open the PR:
+
+   - `git push -u origin <branch>` if the branch has no upstream.
+   - `gh pr create --base <base> --title <title> --body-file -` piping the
+     approved body via heredoc. Write paragraphs as single unwrapped lines — do
+     not hard-wrap at 80 columns (see Style).
+   - Open ready-for-review by default. Add `--draft` only if the user asked.
+
+1. **Report the PR URL** from `gh`'s output.
+
+## Template
+
+```md
+## Problem
+
+<What's wrong or missing, and why it matters. Reference the issue/ticket
+if there is one.>
+
+## Solution
+
+<What the change does to fix it, verifiable against the diff. Lead with
+the key change; note trade-offs.>
+
+## Notes
+
+<Optional: testing, migration steps, risks, follow-ups. Omit if empty.>
+```
+
+## Style
+
+- Omit needless words — see
+  [`../shared/CONCISE-PROSE.md`](../shared/CONCISE-PROSE.md). No marketing tone,
+  no restating the diff line by line, no boilerplate checklists.
+- **Don't hard-wrap the PR body.** GitHub soft-wraps prose, so manual breaks at
+  80 columns render as ragged text. Write each paragraph as one continuous line;
+  use real blank lines between paragraphs and list items for structure. (The
+  80-column markdown convention applies to source files, not text submitted to
+  GitHub.)
+- Use backticks for identifiers, paths, flags, env vars.
+- Describe behaviour and intent, not a file-by-file walkthrough.
+- Don't invent testing or context absent from the diff or supplied by the user —
+  ask instead.
+- Match any PR template the repo ships (`.github/PULL_REQUEST_TEMPLATE*`),
+  mapping Problem/Solution onto its sections.

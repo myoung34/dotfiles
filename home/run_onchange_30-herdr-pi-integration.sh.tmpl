@@ -1,0 +1,22 @@
+#!/bin/sh
+set -eu
+
+# dot_mise.toml.tmpl hash: {{ include "dot_mise.toml.tmpl" | sha256sum }}
+
+herdr_bin="$(command -v herdr || true)"
+if [ -z "$herdr_bin" ] && [ -x "$HOME/.local/share/mise/shims/herdr" ]; then
+  herdr_bin="$HOME/.local/share/mise/shims/herdr"
+fi
+
+if [ -z "$herdr_bin" ]; then
+  echo "chezmoi: skipping Herdr Pi integration because herdr is not on PATH" >&2
+  exit 0
+fi
+
+pi_agent_dir="${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}"
+if [ ! -d "$pi_agent_dir" ]; then
+  echo "chezmoi: skipping Herdr Pi integration because $pi_agent_dir does not exist" >&2
+  exit 0
+fi
+
+"$herdr_bin" integration install pi

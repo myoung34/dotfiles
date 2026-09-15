@@ -1,0 +1,21 @@
+#!/bin/sh
+set -eu
+
+# dot_mise.toml.tmpl hash: {{ include "dot_mise.toml.tmpl" | sha256sum }}
+
+PATH="$HOME/.local/share/mise/shims:$PATH"
+
+node_bin="$(command -v node || true)"
+npx_bin="$(command -v npx || true)"
+
+if [ -z "$node_bin" ] || [ -z "$npx_bin" ]; then
+  echo "chezmoi: skipping LazyPi setup because node or npx is not on PATH" >&2
+  exit 0
+fi
+
+if ! "$node_bin" -e 'const [major, minor] = process.versions.node.split(".").map(Number); process.exit(major > 22 || (major === 22 && minor >= 19) ? 0 : 1);'; then
+  echo "chezmoi: skipping LazyPi setup because Node.js 22.19 or later is required" >&2
+  exit 0
+fi
+
+"$npx_bin" --yes @robzolkos/lazypi --yes

@@ -34,6 +34,7 @@ packages:
     - 'tree'
     - 'carlocab/personal/unrar'
     - 'jless'
+    - 'playwright-cli'
     casks:
     - 'font-hack-nerd-font'
     - 'balenaetcher'
@@ -45,3 +46,5 @@ packages:
     - 'keybase'
     - 'obsidian'
     - 'jetbrains-toolbox'
+    - 'bambu-studio'
+    - 'claude-code'
