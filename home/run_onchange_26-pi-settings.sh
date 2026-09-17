@@ -2,11 +2,6 @@
 set -eu
 
 jq_bin="$(command -v jq || true)"
-if [ -z "$jq_bin" ]; then
-  echo "chezmoi: skipping Pi settings merge because jq is not installed" >&2
-  exit 0
-fi
-
 pi_agent_dir="${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}"
 settings_file="$pi_agent_dir/settings.json"
 tmp_file="$(mktemp)"

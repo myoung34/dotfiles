@@ -11,6 +11,11 @@ Host i-*
 Include ~/.ssh/work
 {{- end }}
 
+Host seedbox
+  HostName lt5-1-87vecchio.pulsedmedia.com
+  User vilpengu
+  IdentityFile ~/.ssh/seedbox
+
 Host bignasty* 192.168.3.2
   User myoung
   IdentityFile ~/.ssh/bignasty
