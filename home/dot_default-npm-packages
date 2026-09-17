@@ -1,6 +1,6 @@
 msgpack-lite
 socket.io
 log4js
-'@chemzqm/neovim'
+@chemzqm/neovim
 tslib
-'@mariozechner/pi-coding-agent'
+@mariozechner/pi-coding-agent

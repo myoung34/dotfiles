@@ -13,19 +13,25 @@ trap cleanup EXIT
 
 mkdir -p "$pi_agent_dir"
 
+# We route Claude through Aperture (aperture-anthropic), so the standalone
+# Claude CLI extension only nags about being unauthenticated. Drop it.
+drop_packages='["@saccolabs/pi-claude-cli"]'
+
 if [ -f "$settings_file" ]; then
-  "$jq_bin" '. + {
+  "$jq_bin" --argjson drop "$drop_packages" '. + {
     "lastChangelogVersion": "0.85.1",
     "theme": "dark",
     "defaultProvider": "aperture-anthropic",
-    "defaultModel": "claude-opus-4-8"
-  }' "$settings_file" > "$tmp_file"
+    "defaultModel": "claude-opus-5"
+  }
+  | (.packages) |= (map(select(. as $p | ($drop | any(. as $d | ($p | contains($d)))) | not)))
+  ' "$settings_file" > "$tmp_file"
 else
   "$jq_bin" -n '{
     "lastChangelogVersion": "0.85.1",
     "theme": "dark",
     "defaultProvider": "aperture-anthropic",
-    "defaultModel": "claude-opus-4-8"
+    "defaultModel": "claude-opus-5"
   }' > "$tmp_file"
 fi
 
