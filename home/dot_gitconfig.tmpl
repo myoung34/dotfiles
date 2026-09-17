@@ -29,9 +29,5 @@
     path = ~/.work_gitconfig
 [includeIf "gitdir:~/work/fastly/"]
     path = ~/.work_gitconfig
-{{ if .workf -}}
-[url "git@github.com:{{ .chezmoi.config.data.work_name | lower }}"]
-  insteadof = https://github.com/{{ .chezmoi.config.data.work_name | lower }}
-{{- end }}
 [init]
   defaultBranch = main

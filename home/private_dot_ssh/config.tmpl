@@ -1,14 +1,10 @@
 Include /Users/marcus.young/.ssh/conductor_config
 
-{{ if .workf -}}
-Include ~/.colima/ssh_config
-Include ~/.ssh/work
 
-Host i-*
-      ProxyCommand sh -c "aws --region us-east-2 ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
-{{- end }}
 {{ if .workmw -}}
 Include ~/.ssh/work
+Host i-*
+      ProxyCommand sh -c "aws --region us-east-2 ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
 {{- end }}
 
 Host seedbox

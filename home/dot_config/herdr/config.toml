@@ -2,3 +2,6 @@ onboarding = false
 
 [terminal]
 default_shell = "pi"
+
+[ui]
+agent_panel_sort = "spaces"
