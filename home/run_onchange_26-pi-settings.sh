@@ -17,21 +17,26 @@ mkdir -p "$pi_agent_dir"
 # Claude CLI extension only nags about being unauthenticated. Drop it.
 drop_packages='["@saccolabs/pi-claude-cli"]'
 
+# Packages we always want installed, on top of whatever LazyPi curates.
+add_packages='["git:github.com/DietrichGebert/ponytail"]'
+
 if [ -f "$settings_file" ]; then
-  "$jq_bin" --argjson drop "$drop_packages" '. + {
+  "$jq_bin" --argjson drop "$drop_packages" --argjson add "$add_packages" '. + {
     "lastChangelogVersion": "0.85.1",
     "theme": "dark",
     "defaultProvider": "aperture-anthropic",
     "defaultModel": "claude-opus-5"
   }
   | (.packages) |= (map(select(. as $p | ($drop | any(. as $d | ($p | contains($d)))) | not)))
+  | .packages = ((.packages // []) as $kept | $kept + ($add - $kept))
   ' "$settings_file" > "$tmp_file"
 else
-  "$jq_bin" -n '{
+  "$jq_bin" -n --argjson add "$add_packages" '{
     "lastChangelogVersion": "0.85.1",
     "theme": "dark",
     "defaultProvider": "aperture-anthropic",
-    "defaultModel": "claude-opus-5"
+    "defaultModel": "claude-opus-5",
+    "packages": $add
   }' > "$tmp_file"
 fi
 
