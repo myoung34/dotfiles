@@ -27,7 +27,9 @@
 	signingkey = BE13958D157CDC07
 [includeIf "gitdir:~/repos/meanwhile/"]
     path = ~/.work_gitconfig
-[includeIf "hasconfig:remote.*.url:git@git.standard.re:**"]
+[includeIf "hasconfig:remote.*.url:git@git.standard.re:**/**"]
+    path = ~/.work_gitconfig
+[includeIf "hasconfig:remote.*.url:https://git.standard.re/**/**"]
     path = ~/.work_gitconfig
 [init]
   defaultBranch = main
