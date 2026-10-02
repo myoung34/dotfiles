@@ -25,9 +25,9 @@
   email = {{ .chezmoi.config.data.email }}
   name = Mark Young
 	signingkey = BE13958D157CDC07
-[includeIf "gitdir:~/work/meanwhile/"]
+[includeIf "gitdir:~/repos/meanwhile/"]
     path = ~/.work_gitconfig
-[includeIf "gitdir:~/work/fastly/"]
+[includeIf "hasconfig:remote.*.url:git@git.standard.re:**"]
     path = ~/.work_gitconfig
 [init]
   defaultBranch = main
