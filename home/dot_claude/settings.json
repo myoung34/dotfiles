@@ -82,6 +82,7 @@
     "differential-review@trailofbits": true,
     "gopls-lsp@claude-plugins-official": true,
     "insecure-defaults@trailofbits": true,
+    "ponytail@ponytail": true,
     "security-guidance@claude-plugins-official": true,
     "sharp-edges@trailofbits": true
   },
@@ -90,6 +91,12 @@
       "source": {
         "source": "github",
         "repo": "tomasz-tomczyk/crit"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
       }
     }
   },
