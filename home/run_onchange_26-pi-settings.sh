@@ -34,7 +34,7 @@ compaction='{
   "reserveTokens": 16384,
   "keepRecentTokens": 60000,
   "modelOverrides": {
-    "aperture-anthropic/claude-opus-5": { "reserveTokens": 400000 }
+    "aperture-anthropic/claude-opus-5-5": { "reserveTokens": 400000 }
   }
 }'
 
@@ -44,7 +44,7 @@ if [ -f "$settings_file" ]; then
     "lastChangelogVersion": "0.85.1",
     "theme": "dark",
     "defaultProvider": "aperture-anthropic",
-    "defaultModel": "claude-opus-5",
+    "defaultModel": "claude-opus-5-5",
     "compaction": $compaction
   }
   | (.packages) |= (map(select(. as $p | ($drop | any(. as $d | ($p | contains($d)))) | not)))
@@ -55,7 +55,7 @@ else
     "lastChangelogVersion": "0.85.1",
     "theme": "dark",
     "defaultProvider": "aperture-anthropic",
-    "defaultModel": "claude-opus-5",
+    "defaultModel": "claude-opus-5-5",
     "compaction": $compaction,
     "packages": $add
   }' > "$tmp_file"
