@@ -19,12 +19,13 @@
 - **Simplicity:** Solve problems by removing components or abstractions, not by stacking new ones. Architect features with the fewest moving parts that satisfy the requirement.
 - **TDD:** No code without a failing test; write minimum code to pass; clean dead code immediately. Assert expected behavior, not implementation—delete assertions that survive an inverted requirement.
 - **Code Edits:** Propose diffs in chat and get explicit approval before invoking code-editing tools. A question is an inquiry, not an instruction to edit—answer it. Keep changes scoped to what was asked.
-- **PRs Required:** Every repo change lands through a PR. Never commit or push to the default branch. If you can't open the PR, push the branch and hand back the compare URL. A one-off approval to push directly doesn't carry over.
+- **PRs Required:** Every repo change lands through a PR from a branch. Do the work in a git worktree under `/tmp` (`git worktree add "$(mktemp -d /tmp/wt.XXXXXX)" ...`) so my local checkout stays untouched. Never commit or push to the default branch. A one-off approval to push directly doesn't carry over.
 - **Large Diffs:** If >40 lines, prompt with a 1-line summary first; let user choose to view full diff or proceed to edits.
 
 # Tooling & Verification
 
 - **Tools:** Use Makefile targets over direct calls (e.g., `make test`). Use Edit tool for changes, Grep for exact searches, `rg` for regex, and Mermaid diagrams for complex systems.
+- **GitHub:** Use the `gh` CLI or the GitHub API for PRs, reviews, and comments, never browser automation. If `gh` can't auth (github.com repos use per-repo SSH keys, not tokens), push the branch and give me the compare URL to open the PR myself.
 - **Verification:** Verify via source read/grep, authoritative docs, or adjacent repos before asserting. Never rely on general knowledge for specifics (headers, pricing, APIs).
 - **Scratch Files:** Write temp files under `$TMPDIR` (or `mktemp`), never fixed `/tmp/...` paths—sessions run concurrently and get a private `TMPDIR`.
 - **Images:** Read every image you're given. If `read` omits it as unsupported, extract what you need locally first (`python3` with Pillow/pytesseract, `tesseract`, `pdftotext`, `exiftool`). Delegate the read to a vision-capable subagent model only when no local route works—"unsupported" is often a model-config flag, not a real limit.
