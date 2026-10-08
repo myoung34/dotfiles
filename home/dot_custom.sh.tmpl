@@ -91,6 +91,52 @@ function fix_wsl() {
   sudo mount -t drvfs -o "ro,umask=222" "C:\Program Files\usbipd-win\WSL" "/var/run/usbipd-win"
 }
 
+# Isolate every interactive pi session so concurrent sessions don't trample
+# each other or my own checkout:
+# - a private TMPDIR, removed on exit
+# - inside a git repo, a fresh worktree of HEAD under ~/.cache/pi/worktrees,
+#   removed on exit unless it holds uncommitted work or detached commits
+# Sessions are still filed under the original directory, so `pi -c`/`pi -r`
+# from the repo find them. Subcommands and resumes run unwrapped.
+# Opt out with PI_NO_WORKTREE=1.
+function pi() {
+  case "$1" in
+    install|remove|uninstall|update|list|config|auth|mcp|-h|--help|-v|--version)
+      command pi "$@"; return ;;
+  esac
+  local a
+  for a in "$@"; do
+    case "$a" in -c|--continue|-r|--resume|--session|--session=*|--fork|--fork=*)
+      command pi "$@"; return ;;
+    esac
+  done
+
+  local tmp root wt base rc sessions
+  tmp=$(mktemp -d "${TMPDIR:-/tmp}/pi.XXXXXX") || return
+  root=$(git rev-parse --show-toplevel 2>/dev/null)
+  if [[ -z $root || -n $PI_NO_WORKTREE ]]; then
+    TMPDIR=$tmp command pi "$@"; rc=$?
+    rm -rf "$tmp"; return $rc
+  fi
+
+  wt="${XDG_CACHE_HOME:-$HOME/.cache}/pi/worktrees/${root:t}-${tmp:t:e}"
+  base=$(git rev-parse HEAD) || { rm -rf "$tmp"; return 1; }
+  git worktree add --quiet --detach "$wt" "$base" || { rm -rf "$tmp"; return 1; }
+  # Mirrors pi's default sessions dir name: /a/b -> --a-b--
+  sessions="$HOME/.pi/agent/sessions/--${${PWD#/}//\//-}--"
+  ( { cd "$wt/$(git rev-parse --show-prefix)" 2>/dev/null || cd "$wt"; } &&
+    TMPDIR=$tmp PI_CODING_AGENT_SESSION_DIR=$sessions command pi "$@" ); rc=$?
+  rm -rf "$tmp"
+
+  if [[ -z $(git -C "$wt" status --porcelain) ]] &&
+     { git -C "$wt" symbolic-ref -q HEAD >/dev/null || [[ $(git -C "$wt" rev-parse HEAD) == $base ]]; }; then
+    git worktree remove --force "$wt"
+  else
+    echo "pi: kept worktree with unsaved work: $wt" >&2
+  fi
+  return $rc
+}
+
 [[ $(uname -r) == *"microsoft"* ]] && cd ~
 
 ### pdf note

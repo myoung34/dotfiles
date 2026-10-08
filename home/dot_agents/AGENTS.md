@@ -24,6 +24,7 @@
 
 - **Tools:** Use Makefile targets over direct calls (e.g., `make test`). Use Edit tool for changes, Grep for exact searches, `rg` for regex, and Mermaid diagrams for complex systems.
 - **Verification:** Verify via source read/grep, authoritative docs, or adjacent repos before asserting. Never rely on general knowledge for specifics (headers, pricing, APIs).
+- **Scratch Files:** Write temp files under `$TMPDIR` (or `mktemp`), never fixed `/tmp/...` paths—sessions run concurrently and get a private `TMPDIR`.
 - **Citations:** Cite source (`path/to/file.go:42` or URL). If uncited, label as "unverified assumption" and explain how to verify.
 
 # Cost & Subagents
