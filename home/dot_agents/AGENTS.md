@@ -32,6 +32,7 @@
 - **Repo Isolation:** Make every repo change in a fresh git worktree under `${TMPDIR:-/tmp}`, never in the user's checkout: `git -C <repo> fetch && git -C <repo> worktree add "${TMPDIR:-/tmp}/<repo>-<slug>" -b <branch> origin/main`. Work, commit and push from there, then `git worktree remove` it. The checkouts under `~/repos` hold the user's in-progress work; switching branches or staging files in them clobbers it. The `pi()` wrapper in `.custom.sh` isolates only new sessions started inside a repo, not resumes (`--session`, `-c`, `-r`) or sessions started elsewhere; this rule covers those.
 - **Images:** Read every image you're given. If `read` omits it as unsupported, extract what you need locally first (`python3` with Pillow/pytesseract, `tesseract`, `pdftotext`, `exiftool`). Delegate the read to a vision-capable subagent model only when no local route works—"unsupported" is often a model-config flag, not a real limit.
 - **Citations:** Cite source (`path/to/file.go:42` or URL). If uncited, label as "unverified assumption" and explain how to verify.
+- **Memory:** Read `~/.pi/memory-md/global/MEMORY.md` before running a repo's cluster or infra tooling (`kubectl`, `talosctl`, `vault`) or reporting that access is missing. It records per-repo setup such as homelab's `.envrc`. Session start shows only its one-line description, and `memory_search` skips it because it searches only `core/` dirs.
 
 # Cost & Subagents
 
