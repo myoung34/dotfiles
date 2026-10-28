@@ -22,6 +22,7 @@
 - **PR Comments:** Draft every PR comment, review, reply, and suggestion (including replies to review bots) in chat first. Post only after I explicitly approve that batch; "review as me" still means draft first. Write them with `/caveman` in every repo: one point per comment, a line or two each, never a blob or a novel. No emojis, greetings, or sign-offs; phrased as me (first person), not as an AI.
 - **PRs Required:** Every repo change lands through a PR from a branch. Do the work in a git worktree under `/tmp` (`git worktree add "$(mktemp -d /tmp/wt.XXXXXX)" ...`) so my local checkout stays untouched. Never commit or push to the default branch. A one-off approval to push directly doesn't carry over.
 - **Large Diffs:** If >40 lines, prompt with a 1-line summary first; let user choose to view full diff or proceed to edits.
+- **Secrets (`~/.exports.sh`):** Never bring its contents into the session. No `cat`, `Read`, `grep`/`rg`, `head`, `diff`, `env`/`printenv` dumps, or echoing its variable names or values into output, files, commits, or PRs. Using it is fine: `source ~/.exports.sh >/dev/null 2>&1 && <cmd>`. To check that a variable is set, use `[ -n "$VAR" ]` and don't print it.
 
 # Tooling & Verification
 
