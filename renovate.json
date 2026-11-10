@@ -84,17 +84,6 @@
   ],
   "packageRules": [
     {
-      "description": "Hold python bumps (PR 15): a minor jump from 3.12 to 3.15 changes the Python used by pre-commit CI and the default on dev machines. Remove this rule to take them again",
-      "matchDepNames": [
-        "python"
-      ],
-      "matchUpdateTypes": [
-        "minor",
-        "major"
-      ],
-      "enabled": false
-    },
-    {
       "description": "Every regex-managed bump is read by a human before it lands: these pins drive installs, agent skills, or shell plugins",
       "matchManagers": [
         "custom.regex"
