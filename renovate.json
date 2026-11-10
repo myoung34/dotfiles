@@ -97,6 +97,11 @@
   ],
   "packageRules": [
     {
+      "description": "Automerge non-major updates so renovate-approve approves them. The custom.regex rule below overrides this",
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    },
+    {
       "description": "Every regex-managed bump is read by a human before it lands: these pins drive installs, agent skills, or shell plugins",
       "matchManagers": [
         "custom.regex"
