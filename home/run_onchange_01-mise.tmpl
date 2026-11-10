@@ -3,3 +3,6 @@
 mise use -g cargo:ubi-cli
 
 mise install
+{{ if eq .chezmoi.os "darwin" }}
+mise bootstrap packages apply --manager macos-app --yes
+{{ end }}

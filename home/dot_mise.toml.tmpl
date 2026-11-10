@@ -32,3 +32,11 @@ yq = "latest"
 jless = "latest"
 ripgrep = "latest"
 saml2aws = "latest"
+{{ if eq .chezmoi.os "darwin" }}
+
+[bootstrap.packages."macos-app:parallel-code"]
+version = "5.1.0"
+url = "https://github.com/johannesjo/parallel-code/releases/download/v{{ "{{version}}" }}/Parallel-Code-{{ "{{version}}" }}-universal.dmg"
+sha256 = "7609b9da2a259f9fdffe591a7b53ab9be0461118cb251935c0f9bb5dbf1f496d"
+artifact = "Parallel Code.app"
+{{ end }}
