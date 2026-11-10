@@ -13,9 +13,6 @@ alias pbcopy="xclip -sel clip"
 {{ end }}
 alias rlp="source ~/.custom.sh"
 ( mise which kubectl >/dev/null 2>&1 ) && alias k=$(mise which kubectl)
-(command -v colima >/dev/null 2>&1) \
-  && alias docker="colima nerdctl --" \
-  && alias docker_restart="colima stop; colima start --network-address --runtime containerd"
 
 # Direnv setup
 ( mise which direnv >/dev/null 2>&1 ) && eval "$(direnv hook zsh)" || :
