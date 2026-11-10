@@ -80,6 +80,19 @@
       "managerFilePatterns": [
         "/^home/dot_mise\\.toml\\.tmpl$/"
       ]
+    },
+    {
+      "description": "Parallel Code macOS app version. Renovate bumps the version only; the sha256 next to it must be updated by hand in the same PR",
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^home/dot_mise\\.toml\\.tmpl$/"
+      ],
+      "matchStrings": [
+        "\\[bootstrap\\.packages\\.\"macos-app:parallel-code\"\\]\\s+version = \"(?<currentValue>[^\"]+)\""
+      ],
+      "depNameTemplate": "johannesjo/parallel-code",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.+)$"
     }
   ],
   "packageRules": [
@@ -89,6 +102,17 @@
         "custom.regex"
       ],
       "automerge": false
+    },
+    {
+      "matchDepNames": [
+        "johannesjo/parallel-code"
+      ],
+      "labels": [
+        "manual-sha256"
+      ],
+      "prBodyNotes": [
+        "The sha256 for the new .dmg in `home/dot_mise.toml.tmpl` must be updated in this PR. Renovate changes only the version."
+      ]
     }
   ],
   "pre-commit": {
