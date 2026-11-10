@@ -1,55 +1,55 @@
 [".tmux/plugins/tpm"]
     type = "archive"
-    url = "https://github.com/tmux-plugins/tpm/archive/master.tar.gz"
+    url = "https://github.com/tmux-plugins/tpm/archive/e261deb1b47614eed3400089ce7197dc68acc4eb.tar.gz"
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
 [".tmux/plugins/tmux-colors-solarized"]
     type = "archive"
-    url = "https://github.com/seebi/tmux-colors-solarized/archive/master.tar.gz"
+    url = "https://github.com/seebi/tmux-colors-solarized/archive/4d07f3cc1ce2bdc0c8391290c5b0cf098abddddc.tar.gz"
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
 [".tmux/plugins/tmux-continuum"]
      type = "archive"
-     url = "https://github.com/tmux-plugins/tmux-continuum/archive/master.tar.gz"
+     url = "https://github.com/tmux-plugins/tmux-continuum/archive/0698e8f4b17d6454c71bf5212895ec055c578da0.tar.gz"
      exact = true
      stripComponents = 1
      refreshPeriod = "168h"
 [".tmux/plugins/tmux-copycat"]
      type = "archive"
-     url = "https://github.com/tmux-plugins/tmux-copycat/archive/master.tar.gz"
+     url = "https://github.com/tmux-plugins/tmux-copycat/archive/d7f7e6c1de0bc0d6915f4beea5be6a8a42045c09.tar.gz"
      exact = true
      stripComponents = 1
      refreshPeriod = "168h"
 [".tmux/plugins/tmux-resurrect"]
      type = "archive"
-     url = "https://github.com/tmux-plugins/tmux-resurrect/archive/master.tar.gz"
+     url = "https://github.com/tmux-plugins/tmux-resurrect/archive/cff343cf9e81983d3da0c8562b01616f12e8d548.tar.gz"
      exact = true
      stripComponents = 1
      refreshPeriod = "168h"
 [".tmux/plugins/tmux-sensible"]
      type = "archive"
-     url = "https://github.com/tmux-plugins/tmux-sensible/archive/master.tar.gz"
+     url = "https://github.com/tmux-plugins/tmux-sensible/archive/25cb91f42d020f675bb0a2ce3fbd3a5d96119efa.tar.gz"
      exact = true
      stripComponents = 1
      refreshPeriod = "168h"
 [".tmux/plugins/tmux-yank"]
      type = "archive"
-     url = "https://github.com/tmux-plugins/tmux-yank/archive/master.tar.gz"
+     url = "https://github.com/tmux-plugins/tmux-yank/archive/acfd36e4fcba99f8310a7dfb432111c242fe7392.tar.gz"
      exact = true
      stripComponents = 1
      refreshPeriod = "168h"
 
 [".tmux_powerline"]
     type = "archive"
-    url = "https://github.com/erikw/tmux-powerline/archive/master.tar.gz"
+    url = "https://github.com/erikw/tmux-powerline/archive/67e21efaeb560443c741e240b74ce7f3995c765d.tar.gz"
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
 [".vim/bundle/neobundle.vim"]
     type = "archive"
-    url = "https://github.com/Shougo/neobundle.vim/archive/master.tar.gz"
+    url = "https://github.com/Shougo/neobundle.vim/archive/1306c131ff0a6cc094b7ff0727350e442b5427f1.tar.gz"
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
