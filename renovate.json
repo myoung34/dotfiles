@@ -1,0 +1,33 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "customManagers": [
+    {
+      "description": "starslingdev/skills pinned by commit in the chezmoi archive external. Bumps open a PR for review: the skills drive an agent with real tools, so a human reads each change",
+      "customType": "regex",
+      "matchStrings": [
+        "url = \"https://github\\.com/(?<depName>starslingdev/skills)/archive/(?<currentDigest>[0-9a-f]{40})\\.tar\\.gz\""
+      ],
+      "datasourceTemplate": "git-refs",
+      "packageNameTemplate": "https://github.com/{{{depName}}}",
+      "currentValueTemplate": "main",
+      "versioningTemplate": "git",
+      "fileMatch": [
+        "^home/\\.chezmoiexternal\\.toml$"
+      ]
+    }
+  ],
+  "packageRules": [
+    {
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchPackageNames": [
+        "https://github.com/starslingdev/skills"
+      ],
+      "automerge": false
+    }
+  ]
+}
