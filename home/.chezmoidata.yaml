@@ -30,7 +30,6 @@ packages:
     - 'xclip'
     - 'xq'
     - 'xz'
-    - 'colima'
     - 'tree'
     - 'carlocab/personal/unrar'
     - 'jless'
