@@ -7,82 +7,93 @@
     {
       "description": "starslingdev/skills pinned by commit in the chezmoi archive external. Bumps open a PR for review: the skills drive an agent with real tools, so a human reads each change",
       "customType": "regex",
-      "fileMatch": [
-        "^home/\\.chezmoiexternal\\.toml$"
-      ],
       "matchStrings": [
         "url = \"https://github\\.com/(?<depName>starslingdev/skills)/archive/(?<currentDigest>[0-9a-f]{40})\\.tar\\.gz\""
       ],
       "datasourceTemplate": "git-refs",
       "packageNameTemplate": "https://github.com/{{{depName}}}",
       "currentValueTemplate": "main",
-      "versioningTemplate": "git"
+      "versioningTemplate": "git",
+      "managerFilePatterns": [
+        "/^home/\\.chezmoiexternal\\.toml$/"
+      ]
     },
     {
       "description": "tmux and vim plugin archives pinned by commit, tracking master. Owners are listed explicitly; add a new owner here when a plugin from one is pinned",
       "customType": "regex",
-      "fileMatch": [
-        "^home/\\.chezmoiexternal\\.toml$"
-      ],
       "matchStrings": [
         "url = \"https://github\\.com/(?<depName>(?:tmux-plugins|seebi|Shougo)/[^/\\s\"]+)/archive/(?<currentDigest>[0-9a-f]{40})\\.tar\\.gz\""
       ],
       "datasourceTemplate": "git-refs",
       "packageNameTemplate": "https://github.com/{{{depName}}}",
       "currentValueTemplate": "master",
-      "versioningTemplate": "git"
+      "versioningTemplate": "git",
+      "managerFilePatterns": [
+        "/^home/\\.chezmoiexternal\\.toml$/"
+      ]
     },
     {
       "description": "tmux-powerline pinned by commit; its default branch is main",
       "customType": "regex",
-      "fileMatch": [
-        "^home/\\.chezmoiexternal\\.toml$"
-      ],
       "matchStrings": [
         "url = \"https://github\\.com/(?<depName>erikw/tmux-powerline)/archive/(?<currentDigest>[0-9a-f]{40})\\.tar\\.gz\""
       ],
       "datasourceTemplate": "git-refs",
       "packageNameTemplate": "https://github.com/{{{depName}}}",
       "currentValueTemplate": "main",
-      "versioningTemplate": "git"
+      "versioningTemplate": "git",
+      "managerFilePatterns": [
+        "/^home/\\.chezmoiexternal\\.toml$/"
+      ]
     },
     {
       "description": "Mise tool pins in the chezmoi template (the file is a template, so Renovate's mise manager cannot parse it)",
       "customType": "regex",
-      "fileMatch": [
-        "^home/dot_mise\\.toml\\.tmpl$"
-      ],
       "matchStrings": [
         "awscli = \"(?<currentValue>[^\"]+)\""
       ],
       "depNameTemplate": "aws/aws-cli",
-      "datasourceTemplate": "github-tags"
+      "datasourceTemplate": "github-tags",
+      "managerFilePatterns": [
+        "/^home/dot_mise\\.toml\\.tmpl$/"
+      ]
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "^home/dot_mise\\.toml\\.tmpl$"
-      ],
       "matchStrings": [
         "python = \"(?<currentValue>[^\"]+)\""
       ],
       "depNameTemplate": "python",
-      "datasourceTemplate": "python-version"
+      "datasourceTemplate": "python-version",
+      "managerFilePatterns": [
+        "/^home/dot_mise\\.toml\\.tmpl$/"
+      ]
     },
     {
       "customType": "regex",
-      "fileMatch": [
-        "^home/dot_mise\\.toml\\.tmpl$"
-      ],
       "matchStrings": [
         "talosctl = \"(?<currentValue>[^\"]+)\""
       ],
       "depNameTemplate": "siderolabs/talos",
       "datasourceTemplate": "github-releases",
-      "extractVersionTemplate": "^v(?<version>.+)$"
+      "extractVersionTemplate": "^v(?<version>.+)$",
+      "managerFilePatterns": [
+        "/^home/dot_mise\\.toml\\.tmpl$/"
+      ]
     }
   ],
   "packageRules": [
+    {
+      "description": "Hold python bumps (PR 15): a minor jump from 3.12 to 3.15 changes the Python used by pre-commit CI and the default on dev machines. Remove this rule to take them again",
+      "matchDepNames": [
+        "python"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "major"
+      ],
+      "enabled": false
+    },
     {
       "description": "Every regex-managed bump is read by a human before it lands: these pins drive installs, agent skills, or shell plugins",
       "matchManagers": [
