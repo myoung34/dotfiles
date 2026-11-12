@@ -5,7 +5,7 @@
   ],
   "customManagers": [
     {
-      "description": "starslingdev/skills pinned by commit in the chezmoi archive external. Bumps open a PR for review: the skills drive an agent with real tools, so a human reads each change",
+      "description": "starslingdev/skills pinned by commit in the chezmoi archive external",
       "customType": "regex",
       "matchStrings": [
         "url = \"https://github\\.com/(?<depName>starslingdev/skills)/archive/(?<currentDigest>[0-9a-f]{40})\\.tar\\.gz\""
@@ -97,13 +97,6 @@
   ],
   "automerge": true,
   "packageRules": [
-    {
-      "description": "Every regex-managed bump is read by a human before it lands: these pins drive installs, agent skills, or shell plugins",
-      "matchManagers": [
-        "custom.regex"
-      ],
-      "automerge": false
-    },
     {
       "matchDepNames": [
         "johannesjo/parallel-code"
