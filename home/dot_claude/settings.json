@@ -103,7 +103,8 @@
     "superpowers-dev": {
       "source": {
         "source": "github",
-        "repo": "obra/superpowers"
+        "repo": "obra/superpowers",
+        "ref": "v7.0.2"
       }
     }
   },

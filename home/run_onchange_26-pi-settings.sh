@@ -18,7 +18,7 @@ mkdir -p "$pi_agent_dir"
 drop_packages='["@saccolabs/pi-claude-cli"]'
 
 # Packages we always want installed, on top of whatever LazyPi curates.
-add_packages='["git:github.com/DietrichGebert/ponytail", "git:github.com/obra/superpowers"]'
+add_packages='["git:github.com/DietrichGebert/ponytail", "git:github.com/obra/superpowers@v7.0.2"]'
 
 # Compaction budgets. models.json now declares the real context windows the
 # Aperture gateway advertises (see /v1/models), so pi no longer clamps every
