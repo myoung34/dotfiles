@@ -84,7 +84,8 @@
     "insecure-defaults@trailofbits": true,
     "ponytail@ponytail": true,
     "security-guidance@claude-plugins-official": true,
-    "sharp-edges@trailofbits": true
+    "sharp-edges@trailofbits": true,
+    "superpowers@superpowers-dev": true
   },
   "extraKnownMarketplaces": {
     "crit": {
@@ -97,6 +98,12 @@
       "source": {
         "source": "github",
         "repo": "DietrichGebert/ponytail"
+      }
+    },
+    "superpowers-dev": {
+      "source": {
+        "source": "github",
+        "repo": "obra/superpowers"
       }
     }
   },
