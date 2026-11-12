@@ -55,6 +55,6 @@
     refreshPeriod = "168h"
 [".agents/sources/starsling-skills"]
     type = "archive"
-    url = "https://github.com/starslingdev/skills/archive/aba3c61a2334358b1d6294e07942e34423b51a41.tar.gz"
+    url = "https://github.com/starslingdev/skills/archive/c393def704436de9ad2bf72b5ad77c62b656015b.tar.gz"
     exact = true
     stripComponents = 1
