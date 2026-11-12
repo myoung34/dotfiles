@@ -1,10 +1,11 @@
 ---
 name: conventions-python
 description: >-
-  MANDATORY for any work on Python files (*.py). Load this before editing,
-  reviewing, or creating any *.py file. Python coding conventions and style
-  guide covering modern typing, tooling (ruff, mypy, uv), project structure,
-  error handling, and testing.
+  Python coding conventions and style guide covering modern typing, tooling
+  (ruff, mypy, uv), project structure, error handling, and testing. The same
+  body auto-attaches as the path rule .claude/rules/python.md whenever a *.py
+  file is in play, so invoke this skill only when asked for the conventions
+  directly, or in a harness without path rules.
 ---
 
 > [!NOTE]

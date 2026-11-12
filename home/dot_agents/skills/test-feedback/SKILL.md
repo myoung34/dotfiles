@@ -5,7 +5,7 @@ description: >-
   read-only background subagent, then fix the failures
   interactively in the main thread. Use when the user shares
   test output or says "tests fail". Default output path is
-  /tmp/output.
+  $TMPDIR/output.
 ---
 
 # Test Feedback
@@ -19,7 +19,7 @@ for the rule this follows.
 ## Process
 
 1. **Determine the output path** — what the user provided, else
-   `/tmp/output`.
+   `"${TMPDIR:-/tmp}/output"`.
 
 1. **Verify the file exists and is non-empty** by reading it. If missing
    or empty, ask the user where the output is. Do NOT spawn a subagent
