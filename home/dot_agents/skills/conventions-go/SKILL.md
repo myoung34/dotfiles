@@ -1,10 +1,11 @@
 ---
 name: conventions-go
 description: >-
-  MANDATORY for any work on Go files (*.go). Load this before editing,
-  reviewing, or creating any *.go file. Go coding conventions and style
-  guide covering naming, error handling, testing, HTTP handlers, caching,
-  concurrency, and observability.
+  Go coding conventions and style guide covering naming, error handling,
+  testing, HTTP handlers, caching, concurrency, and observability. The same
+  body auto-attaches as the path rule .claude/rules/go.md whenever a *.go
+  file is in play, so invoke this skill only when asked for the conventions
+  directly, or in a harness without path rules.
 ---
 
 > [!NOTE]

@@ -1,6 +1,6 @@
 ---
 name: code-improvement-reviewer
-description: "Use this agent when you want to review code for quality improvements including readability, performance, and best practices. This agent analyzes specific files or recently written code and provides actionable suggestions with concrete before/after examples. It does not review entire codebases unless explicitly requested.\\n\\nExamples:\\n\\n<example>\\nContext: User has just written a new function and wants feedback on it.\\nuser: \"Can you review this function I just wrote in handlers.go?\"\\nassistant: \"I'll use the code-improvement-reviewer agent to analyze the function and provide improvement suggestions.\"\\n<Task tool call to code-improvement-reviewer>\\n</example>\\n\\n<example>\\nContext: User wants to improve a specific file before committing.\\nuser: \"Review internal/service/user.go for any improvements\"\\nassistant: \"I'll launch the code-improvement-reviewer agent to scan that file and suggest improvements.\"\\n<Task tool call to code-improvement-reviewer>\\n</example>\\n\\n<example>\\nContext: User asks for general code quality feedback after implementing a feature.\\nuser: \"I just finished the pagination feature. Any ways to improve the code?\"\\nassistant: \"I'll use the code-improvement-reviewer agent to review the pagination implementation and identify improvement opportunities.\"\\n<Task tool call to code-improvement-reviewer>\\n</example>"
+description: "Reviews named files or recently written code for quality improvements across readability, performance, and best practices, and returns prioritized suggestions with concrete before/after examples. Scope is the files or recent changes named in the request; it does not review an entire codebase unless asked to."
 model: opus
 color: red
 ---
@@ -68,7 +68,7 @@ For each issue found:
 - Consider the project's established patterns—don't suggest changes that conflict with project conventions
 - For Go projects: follow standard Go idioms, error wrapping patterns, and the conventions in any CLAUDE.md or CONVENTIONS.md files
 - Group related issues together when they share a common theme
-- Limit suggestions to the most impactful 5-10 items unless comprehensive review is requested
+- Report the issues worth the reader's time and skip the rest, unless a comprehensive review is requested
 
 ## Self-Verification
 

@@ -1,9 +1,11 @@
 ---
 name: conventions-sql
 description: >-
-  MANDATORY for any work on SQL files (*.sql). Load this before editing or
-  creating any *.sql file. SQL migration conventions covering simple DDL,
-  idempotency, batching ALTER statements, comments, and formatting.
+  SQL migration conventions covering simple DDL, idempotency, batching ALTER
+  statements, comments, and formatting. The same body auto-attaches as the
+  path rule .claude/rules/sql.md whenever a *.sql file is in play, so invoke
+  this skill only when asked for the conventions directly, or in a harness
+  without path rules.
 ---
 
 > [!NOTE]

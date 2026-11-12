@@ -1,9 +1,11 @@
 ---
 name: conventions-markdown
 description: >-
-  MANDATORY for any work on Markdown files (*.md). Load this before
-  editing or creating any *.md file. Markdown formatting and linting
-  conventions covering wrapping, code blocks, and linting tools.
+  Markdown formatting and linting conventions covering wrapping, code blocks,
+  and linting tools. The same body auto-attaches as the path rule
+  .claude/rules/markdown.md whenever a *.md file is in play, so invoke this
+  skill only when asked for the conventions directly, or in a harness without
+  path rules.
 ---
 
 We are peers writing Markdown. Prioritize readability, consistency, and
