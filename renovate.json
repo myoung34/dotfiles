@@ -5,20 +5,6 @@
   ],
   "customManagers": [
     {
-      "description": "starslingdev/skills pinned by commit in the chezmoi archive external",
-      "customType": "regex",
-      "matchStrings": [
-        "url = \"https://github\\.com/(?<depName>starslingdev/skills)/archive/(?<currentDigest>[0-9a-f]{40})\\.tar\\.gz\""
-      ],
-      "datasourceTemplate": "git-refs",
-      "packageNameTemplate": "https://github.com/{{{depName}}}",
-      "currentValueTemplate": "main",
-      "versioningTemplate": "git",
-      "managerFilePatterns": [
-        "/^home/\\.chezmoiexternal\\.toml$/"
-      ]
-    },
-    {
       "description": "tmux and vim plugin archives pinned by commit, tracking master. Owners are listed explicitly; add a new owner here when a plugin from one is pinned",
       "customType": "regex",
       "matchStrings": [
