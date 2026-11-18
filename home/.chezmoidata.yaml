@@ -47,3 +47,4 @@ packages:
     - 'jetbrains-toolbox'
     - 'bambu-studio'
     - 'claude-code'
+    - 'codex'
