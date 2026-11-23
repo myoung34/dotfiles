@@ -84,6 +84,16 @@
   "automerge": true,
   "packageRules": [
     {
+      "description": "pre-commit hooks are pinned to python3.12; CI's setup-python must match",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchDepNames": [
+        "python"
+      ],
+      "enabled": false
+    },
+    {
       "matchDepNames": [
         "johannesjo/parallel-code"
       ],

@@ -15,5 +15,5 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
-          python-version: "3.15"
+          python-version: "3.12"  # keep in sync with default_language_version in .pre-commit-config.yaml
       - uses: pre-commit/action@v3.0.1
