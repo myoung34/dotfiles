@@ -1,0 +1,155 @@
+{
+  "skillListingBudgetFraction": 0.04,
+  "env": {
+    "CLAUDE_CODE_ENABLE_AUTO_MODE": "1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_WORKFLOWS": "1"
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "allow": [
+      "Bash(aws *)",
+      "Bash(aws-vault *)",
+      "Bash(cat *)",
+      "Bash(fd *)",
+      "Bash(find *)",
+      "Bash(git *)",
+      "Bash(head *)",
+      "Bash(ls *)",
+      "Bash(make *)",
+      "Bash(rg *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(pulumi up*)",
+      "Bash(pulumi stack output coredb-prod --stack meanwhile/prod/prod --show-secrets --json)",
+      "Bash(aws-vault exec mw-staging-admin -- aws logs filter-log-events:*)",
+      "mcp__claude_ai_Vanta__uploadDocumentFromS3",
+      "mcp__claude_ai_Vanta__addEvidenceToEvidenceRequest",
+      "Bash(aws-vault exec mw-prod-admin -- /private/tmp/claude-501/-Users-myoung-repos-meanwhile/7e1c0203-ffcb-44ea-a796-a2dd70ef2f60/scratchpad/eng-1479/fetch.sh *)"
+    ],
+    "defaultMode": "auto"
+  },
+  "model": "opus",
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "terminal-notifier -message \"Claude Code needs your input\" -sound Sosumi"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "terminal-notifier -message \"Claude Code finished\" -sound default"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/scripts/log-session-cost.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/scripts/statusline.sh"
+  },
+  "enabledPlugins": {
+    "ask-questions-if-underspecified@trailofbits": true,
+    "atlassian@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "crit@crit": true,
+    "differential-review@trailofbits": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "insecure-defaults@trailofbits": true,
+    "ponytail@ponytail": true,
+    "security-guidance@claude-plugins-official": true,
+    "sharp-edges@trailofbits": true,
+    "superpowers@superpowers-dev": true
+  },
+  "extraKnownMarketplaces": {
+    "crit": {
+      "source": {
+        "source": "github",
+        "repo": "tomasz-tomczyk/crit"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    },
+    "superpowers-dev": {
+      "source": {
+        "source": "github",
+        "repo": "obra/superpowers",
+        "ref": "v7.0.2"
+      }
+    }
+  },
+  "viewMode": "verbose",
+  "spinnerVerbs": {
+    "mode": "replace",
+    "verbs": [
+      "Thinking"
+    ]
+  },
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high",
+  "showThinkingSummaries": true,
+  "theme": "dark-ansi",
+  "autoMode": {
+    "soft_deny": [
+      "$defaults",
+      "Bash(git push --force* origin main)",
+      "Bash(git push --force*) from infra/accounts/prod",
+      "Bash(pulumi destroy:*) against infra/accounts/prod or infra/accounts/staging"
+    ],
+    "environment": [
+      "### Org-wide",
+      "**Organization**: meanwhile (git.standard.re:meanwhile/meanwhile.git)",
+      "**Cloud provider(s)**: AWS (aws, aws-vault, saml2aws seen in shell history); Pulumi used for IaC",
+      "**Repository visibility**: assume private — gh visibility check was not queryable (origin host git.standard.re is a self-hosted GHE-style host, not derivable owner/repo), no evidence of public hosting",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: 1Password CLI (op) and aws-vault/saml2aws seen in shell history; CI secrets referenced by name only (ANTHROPIC_API_KEY, AUDITDB_SUPABASE_DB_PASSWORD, CLAUDE_APP_PRIVATE_KEY, CODEX_REVIEW_APP_PRIVATE_KEY, GHES_ORG_RUNNERS_APP_PRIVATE_KEY, GHES_TOKEN_PULUMI_CLASSIC, GHES_TOKEN_PULUMI_MEANWHILE, GHES_TOKEN_PULUMI_STANDARD, LINEAR_API_KEY, MIGRATION_AUTOFIX_APP_PRIVATE_KEY, NEXT_SERVER_ACTIONS_ENCRYPTION_KEY, OPENAI_API_KEY, SLACK_DEPLOY_WEBHOOK_URL, SUPABASE_ACCESS_TOKEN, SUPABASE_DB_PASSWORD)",
+      "**Default / protected branches**: main (default branch per repo facts) — branch protection/rulesets not queryable here (gh lookup failed); treat main as protected by convention",
+      "**CI/CD deploy targets**: infra/accounts/{core,ghes,mgmt,prod,staging,vpn} managed via Pulumi (Pulumi.prod.yaml, esc.prod.yaml present per account); GHES-hosted CI/CD",
+      "**Network posture**: None configured",
+      "**Host containment**: None configured — assume Claude Code runs on an ordinary developer machine with open internet",
+      "**Source control**: this repo (meanwhile/meanwhile on git.standard.re) and its origin remote only",
+      "**Trusted internal domains**: git.standard.re (origin host for this repo)",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: None configured",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: .env / .env.* files (all applications/*/.env.example, web/apps/*/.env.example, web/packages/e2e/.env.example are examples only — real .env/.env.* are gitignored); infra/accounts/{core,ghes,mgmt,prod,staging,vpn}/Pulumi.prod.yaml and esc.prod.yaml; infra/accounts/prod/.gitignore; applications/accountingapp/certification/certify.prod.py and expected-prod-policy-balances.json; infra/coredb/tests/iam_adminweb_auditor_section_migration_test.py — share only with engineers cleared for production infra/financial data",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any host/namespace with `prod` or `production` as a whole word/segment — includes infra/accounts/prod and infra/accounts/*/Pulumi.prod.yaml deploy targets",
+      "**Protected deployment namespaces / environments**: infra/accounts/prod, infra/accounts/staging (prod-adjacent), infra/accounts/core, infra/accounts/ghes, infra/accounts/mgmt, infra/accounts/vpn — Pulumi-managed account namespaces",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, node-pool resources; infra/accounts/prod/* and any Pulumi stack/esc file named *.prod.yaml",
+      "### User-specific",
+      "**Primary use of Claude Code**: software development (insurance platform monorepo; review-judge skill automates PR review-bot triage)",
+      "**Trusted repo**: /Users/myoung/repos/meanwhile/meanwhile (working tree at .worktrees/task/review-judge-it-a-skill-in-696ec6) and its origin remote git.standard.re:meanwhile/meanwhile.git",
+      "**Org-specific CLIs**: mise (toolchain), gh (GitHub/GHES), aws-vault, saml2aws, op (1Password), pulumi, chezmoi, pi, k, viddy — routine under this project's .github/scripts/ and Makefile targets (make dev/bootstrap, make dev/doctor, make review/judge, make diff/analyze)"
+    ]
+  }
+}
