@@ -49,7 +49,7 @@ function phage() {
   if [[ ${YUBIKEY_DETECTED} -eq 0 ]]; then
     echo "Detected yubikey"
     mkdir -p $HOME/.age || :
-    [[ ! -f $HOME/.age/recipient ]] && age-plugin-yubikey -l --serial 11087061 --slot 1 | grep -v '^#' >$HOME/.age/recipient
+    [[ ! -f $HOME/.age/recipient ]] && age-plugin-yubikey -l --serial 24716320 --slot 1 | grep -v '^#' >$HOME/.age/recipient
     [[ ! -f $HOME/.age/identity ]] && age-plugin-yubikey -i >$HOME/.age/identity
     filename=$(basename -- "$1")
     extension="${filename##*.}"
