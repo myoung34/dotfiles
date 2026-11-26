@@ -1,0 +1,6 @@
+# Generated from dot_claude/agents/code-improvement-reviewer.md — edit there.
+name = "code_improvement_reviewer"
+description = "Reviews named files or recently written code for quality improvements across readability, performance, and best practices, and returns prioritized suggestions with concrete before/after examples. Scope is the files or recent changes named in the request; it does not review an entire codebase unless asked to."
+developer_instructions = '''
+{{ regexReplaceAll "(?s)\\A---\\n.*?\\n---\\n+" (include "dot_claude/agents/code-improvement-reviewer.md") "" -}}
+'''
